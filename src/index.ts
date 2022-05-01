@@ -1,1 +1,4 @@
-export const myPackage = (taco = ''): string => `${taco} from my package`;
+import { TerminHTML } from './terminhtml';
+
+export { TerminHTML, TerminHTMLOptions } from './terminhtml';
+export default TerminHTML;
