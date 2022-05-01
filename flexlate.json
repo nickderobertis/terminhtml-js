@@ -1,0 +1,15 @@
+{
+  "template_sources": [
+    {
+      "name": "copier-typescript-npm-sphinx",
+      "path": "https://github.com/nickderobertis/copier-typescript-npm-sphinx",
+      "type": "copier",
+      "version": "42f97f8a100ac2117edc26e8c324479ff3c67e89",
+      "git_url": "https://github.com/nickderobertis/copier-typescript-npm-sphinx",
+      "target_version": null,
+      "render_relative_root_in_output": ".",
+      "render_relative_root_in_template": "output"
+    }
+  ],
+  "applied_templates": []
+}
