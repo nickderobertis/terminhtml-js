@@ -4,7 +4,7 @@
       "name": "copier-typescript-npm-sphinx",
       "path": "https://github.com/nickderobertis/copier-typescript-npm-sphinx",
       "type": "copier",
-      "version": "f0357235e4868b9b231119367306fc01d42303c3",
+      "version": "deb22d05b4194a4e9d86ca955188febcc6d39b1c",
       "git_url": "https://github.com/nickderobertis/copier-typescript-npm-sphinx",
       "target_version": null,
       "render_relative_root_in_output": ".",
@@ -23,7 +23,7 @@
         "author": "Nick DeRobertis",
         "repo_username": "nickderobertis"
       },
-      "version": "f0357235e4868b9b231119367306fc01d42303c3",
+      "version": "deb22d05b4194a4e9d86ca955188febcc6d39b1c",
       "add_mode": "local",
       "root": "."
     }
