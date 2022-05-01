@@ -8,8 +8,8 @@
   ],
   "scripts": {
     "build": "npm run clean && tsc && npm run copy-files",
-    "clean": "rimraf ./lib/",
-    "copy-files": "copyfiles src/**/*.css lib/",
+    "clean": "rimraf ./dist/",
+    "copy-files": "copyfiles src/**/*.css dist/",
     "coverage": "codecov",
     "lint": "eslint ./src/ --fix",
     "prepare": "husky install",
