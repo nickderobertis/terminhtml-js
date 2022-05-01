@@ -1,5 +1,5 @@
-import { getElementFromSelectorOrElement } from "./dom-utils";
-import { LineData, Termynal, TermynalOptions } from "./termynal";
+import { getElementFromSelectorOrElement } from './dom-utils';
+import { LineData, Termynal, TermynalOptions } from './termynal';
 
 /*
  * Custom options for TerminHTML
@@ -40,8 +40,8 @@ export type TerminHTMLOptions = {
  * set internally by Termnyal.
  */
 const defaultOptions: TerminHTMLOptions = {
-  promptLiteralStart: "$ ",
-  customPromptLiteralStart: "# ",
+  promptLiteralStart: '$ ',
+  customPromptLiteralStart: '# ',
   initNow: false,
 };
 
@@ -51,7 +51,7 @@ export class TerminHTML {
   private termynal: Termynal;
 
   constructor(
-    container: string | HTMLElement = "#termynal",
+    container: string | HTMLElement = '#termynal',
     options: Partial<TerminHTMLOptions> = {}
   ) {
     this.container = getElementFromSelectorOrElement(container);
@@ -68,35 +68,39 @@ export class TerminHTML {
     this.termynal = new Termynal(container, termynalOptions);
   }
 
+  init() {
+    this.termynal.init();
+  }
+
   _createLineData(): LineData[] {
-    const lines = this.container.innerHTML.split("\n");
+    const lines = this.container.innerHTML.split('\n');
     const lineData: LineData[] = [];
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
-      if (line.startsWith("// ")) {
+      if (line.startsWith('// ')) {
         lineData.push({
-          value: "💬 " + line.replace("// ", "").trimEnd(),
-          class: "termynal-comment",
+          value: '💬 ' + line.replace('// ', '').trimEnd(),
+          class: 'termynal-comment',
           delay: 0,
         });
       } else if (line.startsWith(this.options.promptLiteralStart)) {
         lineData.push({
-          type: "input",
-          value: line.replace(this.options.promptLiteralStart, "").trimEnd(),
+          type: 'input',
+          value: line.replace(this.options.promptLiteralStart, '').trimEnd(),
         });
       } else if (line.startsWith(this.options.customPromptLiteralStart)) {
         const promptStart = line.indexOf(this.options.promptLiteralStart);
         if (promptStart === -1) {
-          console.error("Custom prompt found but no end delimiter", line);
+          console.error('Custom prompt found but no end delimiter', line);
         }
         const prompt = line
           .slice(0, promptStart)
-          .replace(this.options.customPromptLiteralStart, "");
-        let value = line.slice(
+          .replace(this.options.customPromptLiteralStart, '');
+        const value = line.slice(
           promptStart + this.options.promptLiteralStart.length
         );
         lineData.push({
-          type: "input",
+          type: 'input',
           value,
           prompt,
         });
