@@ -1,0 +1,73 @@
+{
+  "name": "terminhtml",
+  "version": "0.0.0-development",
+  "description": "Convert HTML blocks with terminal output into animated terminals",
+  "main": "./lib/src/index.js",
+  "files": [
+    "lib/**/*"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf ./lib/",
+    "coverage": "codecov",
+    "lint": "eslint ./src/ --fix",
+    "prepare": "husky install",
+    "semantic-release": "semantic-release",
+    "test:watch": "jest --watch",
+    "test": "jest --coverage",
+    "typecheck": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nickderobertis/terminhtml-js.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Nick DeRobertis",
+    "email": "nickderobertis@users.noreply.github.com",
+    "url": "https://github.com/nickderobertis"
+  },
+  "engines": {
+    "node": ">=12.0"
+  },
+  "keywords": [
+    "boilerplate",
+    "template",
+    "typescript",
+    "vscode",
+    "jest",
+    "husky",
+    "commitizen",
+    "semantic-release",
+    "codecov"
+  ],
+  "bugs": {
+    "url": "https://github.com/nickderobertis/terminhtml-js/issues"
+  },
+  "homepage": "https://github.com/nickderobertis/terminhtml-js#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/jest": "^26.0.24",
+    "@types/node": "^12.20.11",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
+    "codecov": "^3.8.3",
+    "commitlint": "^16.2.4",
+    "@commitlint/config-conventional": "^16.2.4",
+    "eslint": "^7.25.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "husky": "^7.0.4",
+    "jest": "^27.2.0",
+    "lint-staged": "^10.5.4",
+    "prettier": "^2.2.1",
+    "semantic-release": "^19.0.2",
+    "ts-jest": "^27.0.5",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.2.4"
+  },
+  "lint-staged": {
+    "*.ts": "eslint --cache --cache-location .eslintcache --fix"
+  }
+}

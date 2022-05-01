@@ -14,7 +14,15 @@
   "applied_templates": [
     {
       "name": "copier-typescript-npm-sphinx",
-      "data": {},
+      "data": {
+        "package_name": "terminhtml",
+        "repo_name": "terminhtml-js",
+        "full_name": "TerminHTML JS",
+        "short_description": "Convert HTML blocks with terminal output into animated terminals",
+        "main_branch_name": "main",
+        "author": "Nick DeRobertis",
+        "repo_username": "nickderobertis"
+      },
       "version": "42f97f8a100ac2117edc26e8c324479ff3c67e89",
       "add_mode": "local",
       "root": "."
