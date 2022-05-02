@@ -20,5 +20,16 @@ module.exports = defineConfig({
         globals: {}
       }
     }
-  }
+  },
+  test: {
+    coverage: {
+      reporter: ['text', 'json', 'html'],
+    },
+    include: [
+      path.resolve(
+        __dirname,
+        './test/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'
+      ),
+    ],
+  },
 })
