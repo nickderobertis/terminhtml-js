@@ -33,6 +33,11 @@ you can always point to the most recent stable release with the `terminhtml@late
 
 Clone the repo and then run `npm install` to set up the pre-commit hooks.
 
+Run `npm run dev` to start the development server, and `npm run build` to create a production build
+of the library.
+
+The library files are stored in `src`, while the files for the development page are in `dev-src`.
+
 ## Author
 
 Created by Nick DeRobertis. MIT License.
