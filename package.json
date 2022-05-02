@@ -2,10 +2,17 @@
   "name": "terminhtml",
   "version": "0.0.0-development",
   "description": "Convert HTML blocks with terminal output into animated terminals",
-  "main": "./dist/src/index.js",
+  "main": "./dist/terminhtml.umd.js",
+  "module": "./dist/terminhtml.es.js",
   "files": [
     "dist/**/*"
   ],
+  "exports": {
+    ".": {
+      "import": "./dist/terminhtml.es.js",
+      "require": "./dist/terminhtml.umd.js"
+    }
+  },
   "scripts": {
     "build": "tsc && vite build",
     "coverage": "codecov",
