@@ -1,13 +1,798 @@
 <!DOCTYPE html>
+
+
 <html lang="en">
+
+
   <head>
+
+
     <meta charset="UTF-8" />
+
+
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
     <title>Vite App</title>
+
+
   </head>
+
+
   <body>
-    <div id="app"></div>
+
+
+    <h2>ANSI HTML</h2>
+
+
+    <style type="text/css">
+      .ansi2html-content {
+        display: inline;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+      .body_foreground {
+        color: #aaaaaa;
+      }
+      .body_background {
+        background-color: #000000;
+      }
+      .body_foreground > .bold,
+      .bold > .body_foreground,
+      body.body_foreground > pre > .bold {
+        color: #ffffff;
+        font-weight: normal;
+      }
+      .inv_foreground {
+        color: #000000;
+      }
+      .inv_background {
+        background-color: #aaaaaa;
+      }
+      .inv_foreground {
+        color: #000000;
+      }
+      .inv_background {
+        background-color: #aaaaaa;
+      }
+      .ansi1 {
+        font-weight: bold;
+      }
+      .ansi2 {
+        font-weight: lighter;
+      }
+      .ansi3 {
+        font-style: italic;
+      }
+      .ansi4 {
+        text-decoration: underline;
+      }
+      .ansi5 {
+        text-decoration: blink;
+      }
+      .ansi9 {
+        text-decoration: line-through;
+      }
+      .ansi31 {
+        color: #aa0000;
+      }
+      .ansi32 {
+        color: #00aa00;
+      }
+      .ansi33 {
+        color: #aa5500;
+      }
+      .ansi34 {
+        color: #0000aa;
+      }
+      .ansi35 {
+        color: #e850a8;
+      }
+      .ansi36 {
+        color: #00aaaa;
+      }
+      .ansi40 {
+        background-color: #000316;
+      }
+      .ansi91 {
+        color: #ea4040;
+      }
+      .ansi92 {
+        color: #40ea40;
+      }
+      .ansi94 {
+        color: #4040ea;
+      }
+      .ansi97 {
+        color: #ffffff;
+      }
+      .ansi48-17 {
+        background: #00005f;
+      }
+      .ansi38-18 {
+        color: #000087;
+      }
+      .ansi48-18 {
+        background: #000087;
+      }
+      .ansi38-19 {
+        color: #0000af;
+      }
+      .ansi38-20 {
+        color: #0000d7;
+      }
+      .ansi48-20 {
+        background: #0000d7;
+      }
+      .ansi48-21 {
+        background: #0000ff;
+      }
+      .ansi48-52 {
+        background: #5f0000;
+      }
+      .ansi48-53 {
+        background: #5f005f;
+      }
+      .ansi38-54 {
+        color: #5f0087;
+      }
+      .ansi48-54 {
+        background: #5f0087;
+      }
+      .ansi38-55 {
+        color: #5f00af;
+      }
+      .ansi38-56 {
+        color: #5f00d7;
+      }
+      .ansi48-56 {
+        background: #5f00d7;
+      }
+      .ansi48-57 {
+        background: #5f00ff;
+      }
+      .ansi38-88 {
+        color: #870000;
+      }
+      .ansi48-88 {
+        background: #870000;
+      }
+      .ansi38-89 {
+        color: #87005f;
+      }
+      .ansi48-89 {
+        background: #87005f;
+      }
+      .ansi38-90 {
+        color: #870087;
+      }
+      .ansi48-90 {
+        background: #870087;
+      }
+      .ansi38-91 {
+        color: #8700af;
+      }
+      .ansi38-92 {
+        color: #8700d7;
+      }
+      .ansi48-92 {
+        background: #8700d7;
+      }
+      .ansi48-93 {
+        background: #8700ff;
+      }
+      .ansi38-124 {
+        color: #af0000;
+      }
+      .ansi38-125 {
+        color: #af005f;
+      }
+      .ansi38-126 {
+        color: #af0087;
+      }
+      .ansi38-127 {
+        color: #af00af;
+      }
+      .ansi38-128 {
+        color: #af00d7;
+      }
+      .ansi48-128 {
+        background: #af00d7;
+      }
+      .ansi48-129 {
+        background: #af00ff;
+      }
+      .ansi38-160 {
+        color: #d70000;
+      }
+      .ansi48-160 {
+        background: #d70000;
+      }
+      .ansi38-161 {
+        color: #d7005f;
+      }
+      .ansi48-161 {
+        background: #d7005f;
+      }
+      .ansi38-162 {
+        color: #d70087;
+      }
+      .ansi48-162 {
+        background: #d70087;
+      }
+      .ansi38-163 {
+        color: #d700af;
+      }
+      .ansi48-163 {
+        background: #d700af;
+      }
+      .ansi38-164 {
+        color: #d700d7;
+      }
+      .ansi48-164 {
+        background: #d700d7;
+      }
+      .ansi48-165 {
+        background: #d700ff;
+      }
+      .ansi48-196 {
+        background: #ff0000;
+      }
+      .ansi48-197 {
+        background: #ff005f;
+      }
+      .ansi48-198 {
+        background: #ff0087;
+      }
+      .ansi48-199 {
+        background: #ff00af;
+      }
+      .ansi48-200 {
+        background: #ff00d7;
+      }
+      .ansi48-201 {
+        background: #ff00ff;
+      }
+      .ansi48-22 {
+        background: #005f00;
+      }
+      .ansi48-23 {
+        background: #005f5f;
+      }
+      .ansi38-24 {
+        color: #005f87;
+      }
+      .ansi48-24 {
+        background: #005f87;
+      }
+      .ansi38-25 {
+        color: #005faf;
+      }
+      .ansi38-26 {
+        color: #005fd7;
+      }
+      .ansi48-26 {
+        background: #005fd7;
+      }
+      .ansi48-27 {
+        background: #005fff;
+      }
+      .ansi48-58 {
+        background: #5f5f00;
+      }
+      .ansi38-63 {
+        color: #5f5fff;
+      }
+      .ansi38-94 {
+        color: #875f00;
+      }
+      .ansi48-94 {
+        background: #875f00;
+      }
+      .ansi38-99 {
+        color: #875fff;
+      }
+      .ansi38-130 {
+        color: #af5f00;
+      }
+      .ansi38-135 {
+        color: #af5fff;
+      }
+      .ansi38-166 {
+        color: #d75f00;
+      }
+      .ansi48-166 {
+        background: #d75f00;
+      }
+      .ansi38-171 {
+        color: #d75fff;
+      }
+      .ansi48-202 {
+        background: #ff5f00;
+      }
+      .ansi38-203 {
+        color: #ff5f5f;
+      }
+      .ansi38-204 {
+        color: #ff5f87;
+      }
+      .ansi38-205 {
+        color: #ff5faf;
+      }
+      .ansi38-206 {
+        color: #ff5fd7;
+      }
+      .ansi38-207 {
+        color: #ff5fff;
+      }
+      .ansi38-28 {
+        color: #008700;
+      }
+      .ansi48-28 {
+        background: #008700;
+      }
+      .ansi38-29 {
+        color: #00875f;
+      }
+      .ansi48-29 {
+        background: #00875f;
+      }
+      .ansi38-30 {
+        color: #008787;
+      }
+      .ansi48-30 {
+        background: #008787;
+      }
+      .ansi38-31 {
+        color: #0087af;
+      }
+      .ansi38-32 {
+        color: #0087d7;
+      }
+      .ansi48-32 {
+        background: #0087d7;
+      }
+      .ansi48-33 {
+        background: #0087ff;
+      }
+      .ansi38-64 {
+        color: #5f8700;
+      }
+      .ansi48-64 {
+        background: #5f8700;
+      }
+      .ansi38-69 {
+        color: #5f87ff;
+      }
+      .ansi38-100 {
+        color: #878700;
+      }
+      .ansi48-100 {
+        background: #878700;
+      }
+      .ansi38-102 {
+        color: #878787;
+      }
+      .ansi38-105 {
+        color: #8787ff;
+      }
+      .ansi48-105 {
+        background: #8787ff;
+      }
+      .ansi38-136 {
+        color: #af8700;
+      }
+      .ansi38-141 {
+        color: #af87ff;
+      }
+      .ansi48-141 {
+        background: #af87ff;
+      }
+      .ansi38-172 {
+        color: #d78700;
+      }
+      .ansi48-172 {
+        background: #d78700;
+      }
+      .ansi38-177 {
+        color: #d787ff;
+      }
+      .ansi48-177 {
+        background: #d787ff;
+      }
+      .ansi48-208 {
+        background: #ff8700;
+      }
+      .ansi38-209 {
+        color: #ff875f;
+      }
+      .ansi38-210 {
+        color: #ff8787;
+      }
+      .ansi48-210 {
+        background: #ff8787;
+      }
+      .ansi38-211 {
+        color: #ff87af;
+      }
+      .ansi48-211 {
+        background: #ff87af;
+      }
+      .ansi38-212 {
+        color: #ff87d7;
+      }
+      .ansi48-212 {
+        background: #ff87d7;
+      }
+      .ansi38-213 {
+        color: #ff87ff;
+      }
+      .ansi48-213 {
+        background: #ff87ff;
+      }
+      .ansi38-34 {
+        color: #00af00;
+      }
+      .ansi38-35 {
+        color: #00af5f;
+      }
+      .ansi38-36 {
+        color: #00af87;
+      }
+      .ansi38-37 {
+        color: #00afaf;
+      }
+      .ansi38-38 {
+        color: #00afd7;
+      }
+      .ansi48-38 {
+        background: #00afd7;
+      }
+      .ansi48-39 {
+        background: #00afff;
+      }
+      .ansi38-70 {
+        color: #5faf00;
+      }
+      .ansi38-75 {
+        color: #5fafff;
+      }
+      .ansi38-106 {
+        color: #87af00;
+      }
+      .ansi38-111 {
+        color: #87afff;
+      }
+      .ansi48-111 {
+        background: #87afff;
+      }
+      .ansi38-142 {
+        color: #afaf00;
+      }
+      .ansi38-178 {
+        color: #d7af00;
+      }
+      .ansi48-178 {
+        background: #d7af00;
+      }
+      .ansi48-214 {
+        background: #ffaf00;
+      }
+      .ansi38-215 {
+        color: #ffaf5f;
+      }
+      .ansi38-216 {
+        color: #ffaf87;
+      }
+      .ansi48-216 {
+        background: #ffaf87;
+      }
+      .ansi38-40 {
+        color: #00d700;
+      }
+      .ansi48-40 {
+        background: #00d700;
+      }
+      .ansi38-41 {
+        color: #00d75f;
+      }
+      .ansi48-41 {
+        background: #00d75f;
+      }
+      .ansi38-42 {
+        color: #00d787;
+      }
+      .ansi48-42 {
+        background: #00d787;
+      }
+      .ansi38-43 {
+        color: #00d7af;
+      }
+      .ansi48-43 {
+        background: #00d7af;
+      }
+      .ansi38-44 {
+        color: #00d7d7;
+      }
+      .ansi48-45 {
+        background: #00d7ff;
+      }
+      .ansi38-76 {
+        color: #5fd700;
+      }
+      .ansi48-76 {
+        background: #5fd700;
+      }
+      .ansi38-81 {
+        color: #5fd7ff;
+      }
+      .ansi38-112 {
+        color: #87d700;
+      }
+      .ansi48-112 {
+        background: #87d700;
+      }
+      .ansi38-117 {
+        color: #87d7ff;
+      }
+      .ansi48-117 {
+        background: #87d7ff;
+      }
+      .ansi38-148 {
+        color: #afd700;
+      }
+      .ansi48-148 {
+        background: #afd700;
+      }
+      .ansi38-149 {
+        color: #afd75f;
+      }
+      .ansi38-184 {
+        color: #d7d700;
+      }
+      .ansi48-184 {
+        background: #d7d700;
+      }
+      .ansi48-220 {
+        background: #ffd700;
+      }
+      .ansi38-221 {
+        color: #ffd75f;
+      }
+      .ansi38-222 {
+        color: #ffd787;
+      }
+      .ansi48-222 {
+        background: #ffd787;
+      }
+      .ansi48-46 {
+        background: #00ff00;
+      }
+      .ansi48-47 {
+        background: #00ff5f;
+      }
+      .ansi48-48 {
+        background: #00ff87;
+      }
+      .ansi48-49 {
+        background: #00ffaf;
+      }
+      .ansi48-50 {
+        background: #00ffd7;
+      }
+      .ansi48-51 {
+        background: #00ffff;
+      }
+      .ansi48-82 {
+        background: #5fff00;
+      }
+      .ansi38-83 {
+        color: #5fff5f;
+      }
+      .ansi38-84 {
+        color: #5fff87;
+      }
+      .ansi38-85 {
+        color: #5fffaf;
+      }
+      .ansi38-86 {
+        color: #5fffd7;
+      }
+      .ansi38-87 {
+        color: #5fffff;
+      }
+      .ansi48-118 {
+        background: #87ff00;
+      }
+      .ansi38-119 {
+        color: #87ff5f;
+      }
+      .ansi38-120 {
+        color: #87ff87;
+      }
+      .ansi48-120 {
+        background: #87ff87;
+      }
+      .ansi38-121 {
+        color: #87ffaf;
+      }
+      .ansi48-121 {
+        background: #87ffaf;
+      }
+      .ansi38-122 {
+        color: #87ffd7;
+      }
+      .ansi48-122 {
+        background: #87ffd7;
+      }
+      .ansi38-123 {
+        color: #87ffff;
+      }
+      .ansi48-123 {
+        background: #87ffff;
+      }
+      .ansi48-154 {
+        background: #afff00;
+      }
+      .ansi38-155 {
+        color: #afff5f;
+      }
+      .ansi38-156 {
+        color: #afff87;
+      }
+      .ansi48-156 {
+        background: #afff87;
+      }
+      .ansi48-190 {
+        background: #d7ff00;
+      }
+      .ansi38-191 {
+        color: #d7ff5f;
+      }
+      .ansi38-192 {
+        color: #d7ff87;
+      }
+      .ansi48-192 {
+        background: #d7ff87;
+      }
+      .ansi48-226 {
+        background: #ffff00;
+      }
+      .ansi38-227 {
+        color: #ffff5f;
+      }
+      .ansi38-228 {
+        color: #ffff87;
+      }
+      .ansi48-228 {
+        background: #ffff87;
+      }
+      .ansi38-231 {
+        color: #ffffff;
+      }
+      .ansi48-235 {
+        background: #262626;
+      }
+      .ansi38-241 {
+        color: #626262;
+      }
+      .ansi38-253 {
+        color: #dadada;
+      }
+    </style>
+
+
+    <pre id="terminhtml-ansi">$ python -m rich
+        <span class="ansi3">                                 Rich features                                  </span>
+        <span class="ansi1 ansi31">              </span>
+        <span class="ansi1 ansi31"> </span><span class="ansi1 ansi31">   Colors   </span><span class="ansi1 ansi31"> </span>✓ <span class="ansi1 ansi32">4-bit color</span>                 <span class="ansi38-88 ansi48-52">▄</span><span class="ansi38-88 ansi48-52">▄</span><span class="ansi38-94 ansi48-52">▄</span><span class="ansi38-94 ansi48-58">▄</span><span class="ansi38-94 ansi48-58">▄</span><span class="ansi38-94 ansi48-58">▄</span><span class="ansi38-100 ansi48-58">▄</span><span class="ansi38-64 ansi48-58">▄</span><span class="ansi38-64 ansi48-58">▄</span><span class="ansi38-64 ansi48-22">▄</span><span class="ansi38-28 ansi48-22">▄</span><span class="ansi38-28 ansi48-22">▄</span><span class="ansi38-28 ansi48-22">▄</span><span class="ansi38-28 ansi48-22">▄</span><span class="ansi38-29 ansi48-22">▄</span><span class="ansi38-29 ansi48-23">▄</span><span class="ansi38-29 ansi48-23">▄</span><span class="ansi38-30 ansi48-23">▄</span><span class="ansi38-30 ansi48-23">▄</span><span class="ansi38-24 ansi48-23">▄</span><span class="ansi38-24 ansi48-23">▄</span><span class="ansi38-24 ansi48-17">▄</span><span class="ansi38-18 ansi48-17">▄</span><span class="ansi38-18 ansi48-17">▄</span><span class="ansi38-18 ansi48-17">▄</span><span class="ansi38-18 ansi48-17">▄</span><span class="ansi38-54 ansi48-17">▄</span><span class="ansi38-54 ansi48-53">▄</span><span class="ansi38-54 ansi48-53">▄</span><span class="ansi38-90 ansi48-53">▄</span><span class="ansi38-89 ansi48-53">▄</span><span class="ansi38-89 ansi48-53">▄</span><span class="ansi38-89 ansi48-53">▄</span><span class="ansi38-89 ansi48-52">▄</span><span class="ansi38-88 ansi48-52">▄</span>
+        <span class="ansi1 ansi31">              </span>✓ <span class="ansi1 ansi34">8-bit color</span>                 <span class="ansi38-124 ansi48-88">▄</span><span class="ansi38-130 ansi48-88">▄</span><span class="ansi38-130 ansi48-94">▄</span><span class="ansi38-136 ansi48-94">▄</span><span class="ansi38-136 ansi48-100">▄</span><span class="ansi38-142 ansi48-100">▄</span><span class="ansi38-142 ansi48-100">▄</span><span class="ansi38-106 ansi48-100">▄</span><span class="ansi38-106 ansi48-64">▄</span><span class="ansi38-70 ansi48-64">▄</span><span class="ansi38-70 ansi48-64">▄</span><span class="ansi38-34 ansi48-28">▄</span><span class="ansi38-34 ansi48-28">▄</span><span class="ansi38-35 ansi48-29">▄</span><span class="ansi38-35 ansi48-29">▄</span><span class="ansi38-36 ansi48-29">▄</span><span class="ansi38-36 ansi48-30">▄</span><span class="ansi38-37 ansi48-30">▄</span><span class="ansi38-37 ansi48-30">▄</span><span class="ansi38-31 ansi48-30">▄</span><span class="ansi38-31 ansi48-24">▄</span><span class="ansi38-25 ansi48-24">▄</span><span class="ansi38-25 ansi48-24">▄</span><span class="ansi38-19 ansi48-18">▄</span><span class="ansi38-19 ansi48-18">▄</span><span class="ansi38-55 ansi48-54">▄</span><span class="ansi38-55 ansi48-54">▄</span><span class="ansi38-91 ansi48-54">▄</span><span class="ansi38-91 ansi48-90">▄</span><span class="ansi38-127 ansi48-90">▄</span><span class="ansi38-127 ansi48-90">▄</span><span class="ansi38-126 ansi48-90">▄</span><span class="ansi38-126 ansi48-89">▄</span><span class="ansi38-125 ansi48-89">▄</span><span class="ansi38-125 ansi48-88">▄</span>
+        <span class="ansi1 ansi31">              </span>✓ <span class="ansi1 ansi35">Truecolor (16.7 million)</span>    <span class="ansi38-160 ansi48-160">▄</span><span class="ansi38-166 ansi48-166">▄</span><span class="ansi38-172 ansi48-166">▄</span><span class="ansi38-172 ansi48-172">▄</span><span class="ansi38-178 ansi48-178">▄</span><span class="ansi38-184 ansi48-178">▄</span><span class="ansi38-184 ansi48-184">▄</span><span class="ansi38-184 ansi48-148">▄</span><span class="ansi38-148 ansi48-112">▄</span><span class="ansi38-112 ansi48-112">▄</span><span class="ansi38-76 ansi48-76">▄</span><span class="ansi38-76 ansi48-40">▄</span><span class="ansi38-40 ansi48-40">▄</span><span class="ansi38-41 ansi48-41">▄</span><span class="ansi38-42 ansi48-42">▄</span><span class="ansi38-43 ansi48-42">▄</span><span class="ansi38-43 ansi48-43">▄</span><span class="ansi38-44 ansi48-43">▄</span><span class="ansi38-44 ansi48-38">▄</span><span class="ansi38-38 ansi48-38">▄</span><span class="ansi38-38 ansi48-32">▄</span><span class="ansi38-32 ansi48-32">▄</span><span class="ansi38-26 ansi48-26">▄</span><span class="ansi38-20 ansi48-20">▄</span><span class="ansi38-56 ansi48-20">▄</span><span class="ansi38-56 ansi48-56">▄</span><span class="ansi38-92 ansi48-92">▄</span><span class="ansi38-128 ansi48-92">▄</span><span class="ansi38-164 ansi48-128">▄</span><span class="ansi38-164 ansi48-164">▄</span><span class="ansi38-164 ansi48-163">▄</span><span class="ansi38-163 ansi48-163">▄</span><span class="ansi38-162 ansi48-162">▄</span><span class="ansi38-162 ansi48-161">▄</span><span class="ansi38-161 ansi48-161">▄</span>
+        <span class="ansi1 ansi31">              </span>✓ <span class="ansi1 ansi33">Dumb terminals</span>              <span class="ansi38-203 ansi48-196">▄</span><span class="ansi38-209 ansi48-202">▄</span><span class="ansi38-209 ansi48-208">▄</span><span class="ansi38-215 ansi48-214">▄</span><span class="ansi38-221 ansi48-214">▄</span><span class="ansi38-221 ansi48-220">▄</span><span class="ansi38-227 ansi48-226">▄</span><span class="ansi38-191 ansi48-190">▄</span><span class="ansi38-155 ansi48-154">▄</span><span class="ansi38-155 ansi48-118">▄</span><span class="ansi38-119 ansi48-118">▄</span><span class="ansi38-83 ansi48-82">▄</span><span class="ansi38-83 ansi48-46">▄</span><span class="ansi38-84 ansi48-47">▄</span><span class="ansi38-85 ansi48-48">▄</span><span class="ansi38-85 ansi48-49">▄</span><span class="ansi38-86 ansi48-50">▄</span><span class="ansi38-87 ansi48-51">▄</span><span class="ansi38-87 ansi48-51">▄</span><span class="ansi38-81 ansi48-45">▄</span><span class="ansi38-75 ansi48-39">▄</span><span class="ansi38-75 ansi48-33">▄</span><span class="ansi38-69 ansi48-27">▄</span><span class="ansi38-63 ansi48-21">▄</span><span class="ansi38-63 ansi48-57">▄</span><span class="ansi38-99 ansi48-93">▄</span><span class="ansi38-135 ansi48-93">▄</span><span class="ansi38-135 ansi48-129">▄</span><span class="ansi38-171 ansi48-165">▄</span><span class="ansi38-207 ansi48-201">▄</span><span class="ansi38-206 ansi48-200">▄</span><span class="ansi38-206 ansi48-199">▄</span><span class="ansi38-205 ansi48-199">▄</span><span class="ansi38-204 ansi48-198">▄</span><span class="ansi38-204 ansi48-197">▄</span>
+        <span class="ansi1 ansi31">              </span>✓ <span class="ansi1 ansi36">Automatic color conversion</span>  <span class="ansi38-210 ansi48-210">▄</span><span class="ansi38-216 ansi48-210">▄</span><span class="ansi38-216 ansi48-216">▄</span><span class="ansi38-222 ansi48-216">▄</span><span class="ansi38-222 ansi48-222">▄</span><span class="ansi38-228 ansi48-228">▄</span><span class="ansi38-228 ansi48-228">▄</span><span class="ansi38-192 ansi48-192">▄</span><span class="ansi38-192 ansi48-192">▄</span><span class="ansi38-192 ansi48-156">▄</span><span class="ansi38-156 ansi48-156">▄</span><span class="ansi38-156 ansi48-120">▄</span><span class="ansi38-120 ansi48-120">▄</span><span class="ansi38-121 ansi48-120">▄</span><span class="ansi38-121 ansi48-121">▄</span><span class="ansi38-122 ansi48-122">▄</span><span class="ansi38-122 ansi48-122">▄</span><span class="ansi38-123 ansi48-123">▄</span><span class="ansi38-123 ansi48-123">▄</span><span class="ansi38-117 ansi48-117">▄</span><span class="ansi38-117 ansi48-117">▄</span><span class="ansi38-111 ansi48-111">▄</span><span class="ansi38-111 ansi48-105">▄</span><span class="ansi38-105 ansi48-105">▄</span><span class="ansi38-141 ansi48-105">▄</span><span class="ansi38-141 ansi48-141">▄</span><span class="ansi38-177 ansi48-141">▄</span><span class="ansi38-177 ansi48-177">▄</span><span class="ansi38-177 ansi48-177">▄</span><span class="ansi38-213 ansi48-213">▄</span><span class="ansi38-213 ansi48-213">▄</span><span class="ansi38-212 ansi48-212">▄</span><span class="ansi38-212 ansi48-211">▄</span><span class="ansi38-211 ansi48-211">▄</span><span class="ansi38-211 ansi48-210">▄</span>
+        <span class="ansi1 ansi31">              </span>
+        <span class="ansi1 ansi31"> </span><span class="ansi1 ansi31">   Styles   </span><span class="ansi1 ansi31"> </span>All ansi styles: <span class="ansi1">bold</span>, <span class="ansi2">dim</span>, <span class="ansi3">italic</span>, <span class="ansi4">underline</span>, <span class="ansi9">strikethrough</span>,
+        <span class="ansi1 ansi31">              </span><span class="inv_background inv_foreground">reverse</span>, and even <span class="ansi5">blink</span>.
+        <span class="ansi1 ansi31">              </span>
+        <span class="ansi1 ansi31"> </span><span class="ansi1 ansi31">    Text    </span><span class="ansi1 ansi31"> </span>Word wrap text. Justify <span class="ansi32">left</span>, <span class="ansi33">center</span>, <span class="ansi34">right</span> or <span class="ansi31">full</span>.
+        <span class="ansi1 ansi31">              </span>
+        <span class="ansi1 ansi31">              </span><span class="ansi32">Lorem ipsum    </span> <span class="ansi33">  Lorem ipsum  </span> <span class="ansi34">     Lorem ipsum</span> <span class="ansi31">Lorem</span><span class="ansi31">      </span><span class="ansi31">ipsum</span>
+        <span class="ansi1 ansi31">              </span><span class="ansi32">dolor sit amet,</span> <span class="ansi33">dolor sit amet,</span> <span class="ansi34"> dolor sit amet,</span> <span class="ansi31">dolor</span><span class="ansi31"> </span><span class="ansi31">sit</span><span class="ansi31">  </span><span class="ansi31">amet,</span>
+        <span class="ansi1 ansi31">              </span><span class="ansi32">consectetur    </span> <span class="ansi33">  consectetur  </span> <span class="ansi34">     consectetur</span> <span class="ansi31">consectetur</span>
+        <span class="ansi1 ansi31">              </span><span class="ansi32">adipiscing     </span> <span class="ansi33">  adipiscing   </span> <span class="ansi34">adipiscing elit.</span> <span class="ansi31">adipiscing</span><span class="ansi31"> </span><span class="ansi31">elit.</span>
+        <span class="ansi1 ansi31">              </span><span class="ansi32">elit. Quisque  </span> <span class="ansi33"> elit. Quisque </span> <span class="ansi34">Quisque in metus</span> <span class="ansi31">Quisque</span><span class="ansi31"> </span><span class="ansi31">in</span><span class="ansi31"> </span><span class="ansi31">metus</span>
+        <span class="ansi1 ansi31">              </span><span class="ansi32">in metus sed   </span> <span class="ansi33"> in metus sed  </span> <span class="ansi34">      sed sapien</span> <span class="ansi31">sed</span><span class="ansi31">       </span><span class="ansi31">sapien</span>
+        <span class="ansi1 ansi31">              </span><span class="ansi32">sapien         </span> <span class="ansi33">    sapien     </span> <span class="ansi34">       ultricies</span> <span class="ansi31">ultricies</span>
+        <span class="ansi1 ansi31">              </span><span class="ansi32">ultricies      </span> <span class="ansi33">   ultricies   </span> <span class="ansi34">    pretium a at</span> <span class="ansi31">pretium</span><span class="ansi31">   </span><span class="ansi31">a</span><span class="ansi31">   </span><span class="ansi31">at</span>
+        <span class="ansi1 ansi31">              </span><span class="ansi32">pretium a at   </span> <span class="ansi33"> pretium a at  </span> <span class="ansi34"> justo. Maecenas</span> <span class="ansi31">justo.</span><span class="ansi31">  </span><span class="ansi31">Maecenas</span>
+        <span class="ansi1 ansi31">              </span><span class="ansi32">justo. Maecenas</span> <span class="ansi33">justo. Maecenas</span> <span class="ansi34"> luctus velit et</span> <span class="ansi31">luctus</span><span class="ansi31"> </span><span class="ansi31">velit</span><span class="ansi31">  </span><span class="ansi31">et</span>
+        <span class="ansi1 ansi31">              </span><span class="ansi32">luctus velit et</span> <span class="ansi33">luctus velit et</span> <span class="ansi34"> auctor maximus.</span> <span class="ansi31">auctor maximus.</span>
+        <span class="ansi1 ansi31">              </span><span class="ansi32">auctor maximus.</span> <span class="ansi33">auctor maximus.</span>
+        <span class="ansi1 ansi31">              </span>
+        <span class="ansi1 ansi31"> </span><span class="ansi1 ansi31">   Asian    </span><span class="ansi1 ansi31"> </span>🇨🇳  该库支持中文，日文和韩文文本！
+        <span class="ansi1 ansi31"> </span><span class="ansi1 ansi31">  language  </span><span class="ansi1 ansi31"> </span>🇯🇵
+        <span class="ansi1 ansi31"> </span><span class="ansi1 ansi31">  support   </span><span class="ansi1 ansi31"> </span>ライブラリは中国語、日本語、韓国語のテキストをサポートしています
+        <span class="ansi1 ansi31">              </span>🇰🇷  이 라이브러리는 중국어, 일본어 및 한국어 텍스트를 지원합니다
+        <span class="ansi1 ansi31">              </span>
+        <span class="ansi1 ansi31"> </span><span class="ansi1 ansi31">   Markup   </span><span class="ansi1 ansi31"> </span><span class="ansi1 ansi35">Rich</span> supports a simple <span class="ansi3">bbcode</span>-like <span class="ansi1">markup</span> for <span class="ansi33">color</span>, <span class="ansi4">style</span>, and
+        <span class="ansi1 ansi31">              </span>emoji! 👍 🍎 🐜 🐻 🥖 🚌
+        <span class="ansi1 ansi31">              </span>
+        <span class="ansi1 ansi31"> </span><span class="ansi1 ansi31">   Tables   </span><span class="ansi1 ansi31"> </span><span class="ansi1"> </span><span class="ansi1 ansi32">Date</span><span class="ansi1">        </span><span class="ansi1"> </span> <span class="ansi1"> </span><span class="ansi1 ansi34">Title</span><span class="ansi1">      </span><span class="ansi1"> </span> <span class="ansi1"> </span><span class="ansi1 ansi36">Production Budget</span><span class="ansi1"> </span> <span class="ansi1"> </span><span class="ansi1">    </span><span class="ansi1 ansi35">Box Office</span><span class="ansi1"> </span>
+        <span class="ansi1 ansi31">              </span>─────────────────────────────────────────────────────────────────
+        <span class="ansi1 ansi31">              </span><span class="ansi32"> </span><span class="ansi32">Dec 20, 2019</span><span class="ansi32"> </span> <span class="ansi34"> </span><span class="ansi34">Star Wars: </span><span class="ansi34"> </span> <span class="ansi36"> </span><span class="ansi36">     $275,000,000</span><span class="ansi36"> </span> <span class="ansi35"> </span><span class="ansi35">  $375,126,118</span><span class="ansi35"> </span>
+        <span class="ansi1 ansi31">              </span><span class="ansi32">              </span> <span class="ansi34"> </span><span class="ansi34">The Rise of</span><span class="ansi34"> </span> <span class="ansi36">                   </span> <span class="ansi35">                </span>
+        <span class="ansi1 ansi31">              </span><span class="ansi32">              </span> <span class="ansi34"> </span><span class="ansi34">Skywalker  </span><span class="ansi34"> </span> <span class="ansi36">                   </span> <span class="ansi35">                </span>
+        <span class="ansi1 ansi31">              </span><span class="ansi2 ansi32"> </span><span class="ansi2 ansi32">May 25, 2018</span><span class="ansi2 ansi32"> </span> <span class="ansi2 ansi34"> </span><span class="ansi2 ansi34">Solo</span><span class="ansi2 ansi34">: A    </span><span class="ansi2 ansi34"> </span> <span class="ansi2 ansi36"> </span><span class="ansi2 ansi36">     $275,000,000</span><span class="ansi2 ansi36"> </span> <span class="ansi2 ansi35"> </span><span class="ansi2 ansi35">  $393,151,347</span><span class="ansi2 ansi35"> </span>
+        <span class="ansi1 ansi31">              </span><span class="ansi2 ansi32">              </span> <span class="ansi2 ansi34"> </span><span class="ansi2 ansi34">Star Wars  </span><span class="ansi2 ansi34"> </span> <span class="ansi2 ansi36">                   </span> <span class="ansi2 ansi35">                </span>
+        <span class="ansi1 ansi31">              </span><span class="ansi2 ansi32">              </span> <span class="ansi2 ansi34"> </span><span class="ansi2 ansi34">Story      </span><span class="ansi2 ansi34"> </span> <span class="ansi2 ansi36">                   </span> <span class="ansi2 ansi35">                </span>
+        <span class="ansi1 ansi31">              </span><span class="ansi32"> </span><span class="ansi32">Dec 15, 2017</span><span class="ansi32"> </span> <span class="ansi34"> </span><span class="ansi34">Star Wars  </span><span class="ansi34"> </span> <span class="ansi36"> </span><span class="ansi36">     $262,000,000</span><span class="ansi36"> </span> <span class="ansi35"> </span><span class="ansi1 ansi35">$1,332,539,889</span><span class="ansi35"> </span>
+        <span class="ansi1 ansi31">              </span><span class="ansi32">              </span> <span class="ansi34"> </span><span class="ansi34">Ep. VIII:  </span><span class="ansi34"> </span> <span class="ansi36">                   </span> <span class="ansi35">                </span>
+        <span class="ansi1 ansi31">              </span><span class="ansi32">              </span> <span class="ansi34"> </span><span class="ansi34">The Last   </span><span class="ansi34"> </span> <span class="ansi36">                   </span> <span class="ansi35">                </span>
+        <span class="ansi1 ansi31">              </span><span class="ansi32">              </span> <span class="ansi34"> </span><span class="ansi34">Jedi       </span><span class="ansi34"> </span> <span class="ansi36">                   </span> <span class="ansi35">                </span>
+        <span class="ansi1 ansi31">              </span><span class="ansi2 ansi32"> </span><span class="ansi2 ansi32">May 19, 1999</span><span class="ansi2 ansi32"> </span> <span class="ansi2 ansi34"> </span><span class="ansi2 ansi34">Star Wars  </span><span class="ansi2 ansi34"> </span> <span class="ansi2 ansi36"> </span><span class="ansi2 ansi36">     $115,000,000</span><span class="ansi2 ansi36"> </span> <span class="ansi2 ansi35"> </span><span class="ansi2 ansi35">$1,027,044,677</span><span class="ansi2 ansi35"> </span>
+        <span class="ansi1 ansi31">              </span><span class="ansi2 ansi32">              </span> <span class="ansi2 ansi34"> </span><span class="ansi2 ansi34">Ep. </span><span class="ansi2 ansi34">I</span><span class="ansi2 ansi34">: </span><span class="ansi2 ansi3 ansi34">The </span><span class="ansi2 ansi34"> </span> <span class="ansi2 ansi36">                   </span> <span class="ansi2 ansi35">                </span>
+        <span class="ansi1 ansi31">              </span><span class="ansi2 ansi32">              </span> <span class="ansi2 ansi34"> </span><span class="ansi2 ansi3 ansi34">phantom </span><span class="ansi2 ansi34">   </span><span class="ansi2 ansi34"> </span> <span class="ansi2 ansi36">                   </span> <span class="ansi2 ansi35">                </span>
+        <span class="ansi1 ansi31">              </span><span class="ansi2 ansi32">              </span> <span class="ansi2 ansi34"> </span><span class="ansi2 ansi3 ansi34">Menace</span><span class="ansi2 ansi34">     </span><span class="ansi2 ansi34"> </span> <span class="ansi2 ansi36">                   </span> <span class="ansi2 ansi35">                </span>
+        <span class="ansi1 ansi31">              </span>
+        <span class="ansi1 ansi31"> </span><span class="ansi1 ansi31">   Syntax   </span><span class="ansi1 ansi31"> </span><span class="ansi1 ansi38-253 ansi48-235">  </span><span class="ansi38-241 ansi48-235"> 1 </span><span class="ansi38-117 ansi48-235">def</span><span class="ansi38-231 ansi48-235"> </span><span class="ansi38-149 ansi48-235">iter_last</span><span class="ansi38-231 ansi48-235">(</span><span class="ansi38-231 ansi48-235">values</span><span class="ansi38-231 ansi48-235">:</span><span class="ansi38-231 ansi48-235"> </span><span class="ansi38-231 ansi48-235">Itera</span>  <span class="ansi1">{</span>
+        <span class="ansi1 ansi31"> </span><span class="ansi1 ansi31">highlighting</span><span class="ansi1 ansi31"> </span><span class="ansi1 ansi38-253 ansi48-235">  </span><span class="ansi38-241 ansi48-235"> 2 </span><span class="ansi2 ansi38-102 ansi48-235">│   </span><span class="ansi38-222 ansi48-235">"""Iterate and generate</span>  <span class="ansi2 ansi32">│   </span><span class="ansi32">'foo'</span>: <span class="ansi1">[</span>
+        <span class="ansi1 ansi31"> </span><span class="ansi1 ansi31">     &amp;      </span><span class="ansi1 ansi31"> </span><span class="ansi1 ansi38-253 ansi48-235">  </span><span class="ansi38-241 ansi48-235"> 3 </span><span class="ansi2 ansi38-102 ansi48-235">│   </span><span class="ansi38-231 ansi48-235">iter_values</span><span class="ansi38-231 ansi48-235"> </span><span class="ansi38-204 ansi48-235">=</span><span class="ansi38-231 ansi48-235"> </span><span class="ansi38-231 ansi48-235">iter</span><span class="ansi38-231 ansi48-235">(</span><span class="ansi38-231 ansi48-235">valu</span>  <span class="ansi2 ansi32">│   │   </span><span class="ansi1 ansi36">3.1427</span>,
+        <span class="ansi1 ansi31"> </span><span class="ansi1 ansi31">   pretty   </span><span class="ansi1 ansi31"> </span><span class="ansi1 ansi38-253 ansi48-235">  </span><span class="ansi38-241 ansi48-235"> 4 </span><span class="ansi2 ansi38-102 ansi48-235">│   </span><span class="ansi38-117 ansi48-235">try</span><span class="ansi38-231 ansi48-235">:</span><span class="ansi48-235">                   </span>  <span class="ansi2 ansi32">│   │   </span><span class="ansi1">(</span>
+        <span class="ansi1 ansi31"> </span><span class="ansi1 ansi31">  printing  </span><span class="ansi1 ansi31"> </span><span class="ansi1 ansi38-253 ansi48-235">  </span><span class="ansi38-241 ansi48-235"> 5 </span><span class="ansi2 ansi38-102 ansi48-235">│   │   </span><span class="ansi38-231 ansi48-235">previous_value</span><span class="ansi38-231 ansi48-235"> </span><span class="ansi38-204 ansi48-235">=</span><span class="ansi38-231 ansi48-235"> </span><span class="ansi38-231 ansi48-235">ne</span>  <span class="ansi2 ansi32">│   │   │   </span><span class="ansi32">'Paul Atreides'</span>,
+        <span class="ansi1 ansi31">              </span><span class="ansi1 ansi38-253 ansi48-235">  </span><span class="ansi38-241 ansi48-235"> 6 </span><span class="ansi2 ansi38-102 ansi48-235">│   </span><span class="ansi38-117 ansi48-235">except</span><span class="ansi38-231 ansi48-235"> </span><span class="ansi38-149 ansi48-235">StopIteration</span><span class="ansi38-231 ansi48-235">:</span><span class="ansi48-235">  </span>  <span class="ansi2 ansi32">│   │   │   </span><span class="ansi32">'Vladimir </span>
+        <span class="ansi1 ansi31">              </span><span class="ansi1 ansi38-253 ansi48-235">  </span><span class="ansi38-241 ansi48-235"> 7 </span><span class="ansi2 ansi38-102 ansi48-235">│   │   </span><span class="ansi38-117 ansi48-235">return</span><span class="ansi48-235">             </span>  <span class="ansi32">Harkonnen'</span>,
+        <span class="ansi1 ansi31">              </span><span class="ansi1 ansi38-253 ansi48-235">  </span><span class="ansi38-241 ansi48-235"> 8 </span><span class="ansi2 ansi38-102 ansi48-235">│   </span><span class="ansi38-117 ansi48-235">for</span><span class="ansi38-231 ansi48-235"> </span><span class="ansi38-231 ansi48-235">value</span><span class="ansi38-231 ansi48-235"> </span><span class="ansi38-204 ansi48-235">in</span><span class="ansi38-231 ansi48-235"> </span><span class="ansi38-231 ansi48-235">iter_value</span>  <span class="ansi2 ansi32">│   │   │   </span><span class="ansi32">'Thufir Hawat'</span>
+        <span class="ansi1 ansi31">              </span><span class="ansi1 ansi38-253 ansi48-235">  </span><span class="ansi38-241 ansi48-235"> 9 </span><span class="ansi2 ansi38-102 ansi48-235">│   │   </span><span class="ansi38-117 ansi48-235">yield</span><span class="ansi38-231 ansi48-235"> </span><span class="ansi38-117 ansi48-235">False</span><span class="ansi38-231 ansi48-235">,</span><span class="ansi38-231 ansi48-235"> </span><span class="ansi38-231 ansi48-235">previo</span>  <span class="ansi2 ansi32">│   │   </span><span class="ansi1">)</span>
+        <span class="ansi1 ansi31">              </span><span class="ansi1 ansi38-253 ansi48-235">  </span><span class="ansi38-241 ansi48-235">10 </span><span class="ansi2 ansi38-102 ansi48-235">│   │   </span><span class="ansi38-231 ansi48-235">previous_value</span><span class="ansi38-231 ansi48-235"> </span><span class="ansi38-204 ansi48-235">=</span><span class="ansi38-231 ansi48-235"> </span><span class="ansi38-231 ansi48-235">va</span>  <span class="ansi2 ansi32">│   </span><span class="ansi1">]</span>,
+        <span class="ansi1 ansi31">              </span><span class="ansi1 ansi38-253 ansi48-235">  </span><span class="ansi38-241 ansi48-235">11 </span><span class="ansi2 ansi38-102 ansi48-235">│   </span><span class="ansi38-117 ansi48-235">yield</span><span class="ansi38-231 ansi48-235"> </span><span class="ansi38-117 ansi48-235">True</span><span class="ansi38-231 ansi48-235">,</span><span class="ansi38-231 ansi48-235"> </span><span class="ansi38-231 ansi48-235">previous_va</span>  <span class="ansi2 ansi32">│   </span><span class="ansi32">'atomic'</span>: <span class="ansi1">(</span>
+        <span class="ansi1 ansi31">              </span>                                  <span class="ansi2 ansi32">│   │   </span><span class="ansi3 ansi91">False</span>,
+        <span class="ansi1 ansi31">              </span>                                  <span class="ansi2 ansi32">│   │   </span><span class="ansi3 ansi92">True</span>,
+        <span class="ansi1 ansi31">              </span>                                  <span class="ansi2 ansi32">│   │   </span><span class="ansi3 ansi35">None</span>
+        <span class="ansi1 ansi31">              </span>                                  <span class="ansi2 ansi32">│   </span><span class="ansi1">)</span>
+        <span class="ansi1 ansi31">              </span>                                  <span class="ansi1">}</span>
+        <span class="ansi1 ansi31">              </span>
+        <span class="ansi1 ansi31"> </span><span class="ansi1 ansi31">  Markdown  </span><span class="ansi1 ansi31"> </span><span class="ansi36"># Markdown</span>                        ╔═════════════════════════════╗
+        <span class="ansi1 ansi31">              </span>                                  ║          <span class="ansi1">Markdown</span>           ║
+        <span class="ansi1 ansi31">              </span><span class="ansi36">Supports much of the *markdown* </span>  ╚═════════════════════════════╝
+        <span class="ansi1 ansi31">              </span><span class="ansi36">__syntax__!</span>
+        <span class="ansi1 ansi31">              </span>                                  Supports much of the <span class="ansi3">markdown</span>
+        <span class="ansi1 ansi31">              </span><span class="ansi36">- Headers</span>                         <span class="ansi1">syntax</span>!
+        <span class="ansi1 ansi31">              </span><span class="ansi36">- Basic formatting: **bold**, </span>
+        <span class="ansi1 ansi31">              </span><span class="ansi36">*italic*, `code`</span>                  <span class="ansi1 ansi33"> • </span>Headers
+        <span class="ansi1 ansi31">              </span><span class="ansi36">- Block quotes</span>                    <span class="ansi1 ansi33"> • </span>Basic formatting: <span class="ansi1">bold</span>,
+        <span class="ansi1 ansi31">              </span><span class="ansi36">- Lists, and more...</span>              <span class="ansi1 ansi33">   </span><span class="ansi3">italic</span>, <span class="ansi97 ansi40">code</span>
+        <span class="ansi1 ansi31">              </span><span class="ansi36">    </span>                              <span class="ansi1 ansi33"> • </span>Block quotes
+        <span class="ansi1 ansi31">              </span>                                  <span class="ansi1 ansi33"> • </span>Lists, and more...
+        <span class="ansi1 ansi31">              </span>
+        <span class="ansi1 ansi31"> </span><span class="ansi1 ansi31">   +more!   </span><span class="ansi1 ansi31"> </span>Progress bars, columns, styled logging handler, tracebacks,
+        <span class="ansi1 ansi31">              </span>etc...
+        <span class="ansi1 ansi31">              </span>
+        rendered in 90.6ms (cold cache)
+        rendered in 37.3ms (warm cache)
+        <span class="ansi94">╭─</span><span class="ansi94">─────────────────────── </span><span class="ansi1 ansi31">Thanks for trying out Rich!</span><span class="ansi94"> ────────────────────────</span><span class="ansi94">─╮</span>
+        <span class="ansi94">│</span>                                                                              <span class="ansi94">│</span>
+        <span class="ansi94">│</span>  We hope you enjoy using      <span class="ansi32">   Textualize</span><span class="ansi32"> </span>]8;id=813048;https://github.com/textualize\<span class="ansi4 ansi34">https://github.com/textualize</span>]8;;\    <span class="ansi94">│</span>
+        <span class="ansi94">│</span>  Rich!                        <span class="ansi32">              </span>                                 <span class="ansi94">│</span>
+        <span class="ansi94">│</span>                               <span class="ansi32">Buy devs a ☕</span><span class="ansi32"> </span>]8;id=909765;https://ko-fi.com/textualize\<span class="ansi4 ansi34">https://ko-fi.com/textualize</span>]8;;\     <span class="ansi94">│</span>
+        <span class="ansi94">│</span>  Rich is maintained with <span class="ansi31">❤</span>    <span class="ansi32">              </span>                                 <span class="ansi94">│</span>
+        <span class="ansi94">│</span>  by ]8;id=593525;https://www.textualize.io\Textualize.io]8;;\             <span class="ansi32">      Twitter</span><span class="ansi32"> </span>]8;id=432046;https://twitter.com/willmcgugan\<span class="ansi4 ansi34">https://twitter.com/willmcgugan</span>]8;;\  <span class="ansi94">│</span>
+        <span class="ansi94">│</span>                                                                              <span class="ansi94">│</span>
+        <span class="ansi94">│</span>  - Will McGugan                                                              <span class="ansi94">│</span>
+        <span class="ansi94">│</span>                                                                              <span class="ansi94">│</span>
+        <span class="ansi94">╰──────────────────────────────────────────────────────────────────────────────╯</span>
+
+        </pre>
+
+
     <script type="module" src="/main.ts"></script>
+
+
   </body>
+
+
 </html>
+
+
