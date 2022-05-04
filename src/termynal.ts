@@ -8,7 +8,10 @@
  * @license MIT
  */
 
-import { getElementFromSelectorOrElement } from "./dom-utils";
+import {
+  getElementFromSelectorOrElement,
+  stringHasHTMLElements,
+} from "./dom-utils";
 
 export type LineData = Partial<{
   value: string;
@@ -356,10 +359,6 @@ export class Termynal {
 
     return attrs;
   }
-}
-
-function stringHasHTMLElements(string: string): boolean {
-  return /<\/?[a-z][\s\S]*>/i.test(string);
 }
 
 function camelCase(str: string): string {

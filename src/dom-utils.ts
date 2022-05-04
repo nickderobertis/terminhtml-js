@@ -10,3 +10,7 @@ export function getElementFromSelectorOrElement(
   }
   return maybeElement;
 }
+
+export function stringHasHTMLElements(string: string): boolean {
+  return /<\/?[a-z][\s\S]*>/i.test(string);
+}
