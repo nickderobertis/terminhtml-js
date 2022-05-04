@@ -379,7 +379,11 @@ function stringIsHTMLElementWithRelevantData(
   container.innerHTML = string;
   const element = container.firstElementChild as HTMLElement;
   if (!element) {
-    throw new Error("No element found in string.");
+    // This must have been an incomplete HTML element, e.g. </span>
+    console.warn(
+      `Detected incomplete HTML element ${string} on its own line. Keep HTML blocks on the same line`
+    );
+    return false;
   }
   const camelCasePrefix = camelCase(prefix);
   for (const prop in element.dataset) {
