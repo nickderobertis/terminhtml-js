@@ -66,11 +66,17 @@ export type TermynalOptions = Partial<{
 
 /** Generate a terminal widget. */
 export class Termynal {
-  /**
-   * Construct the widget's settings.
-   */
   container: HTMLElement;
+  /**
+   * The prefix for attributes to control Termynal, including data-.
+   * Defaults to "data-ty".
+   */
   pfx: string;
+  /**
+   * The custom part of the prefix for attributes to control Termynal, excluding data-.
+   * Defaults to "ty".
+   */
+  customPfx: string;
   originalStartDelay: number;
   originalTypeDelay: number;
   originalLineDelay: number;
@@ -80,9 +86,9 @@ export class Termynal {
   cursor: string;
   lineData: HTMLElement[];
   lines: HTMLElement[] = [];
-  startDelay: number = 600;
-  typeDelay: number = 90;
-  lineDelay: number = 1500;
+  startDelay = 600;
+  typeDelay = 90;
+  lineDelay = 1500;
   finishElement?: HTMLAnchorElement;
 
   /**
@@ -95,7 +101,8 @@ export class Termynal {
     options: TermynalOptions = {}
   ) {
     this.container = getElementFromSelectorOrElement(container);
-    this.pfx = `data-${options.prefix || "ty"}`;
+    this.customPfx = options.prefix ?? "ty";
+    this.pfx = `data-${this.customPfx}`;
     this.originalStartDelay =
       options.startDelay ||
       parseFloat(this.container.getAttribute(`${this.pfx}-startDelay`) ?? "") ||
@@ -133,7 +140,7 @@ export class Termynal {
     if (!options.noInit) this.init();
   }
 
-  loadLines() {
+  loadLines(): void {
     // Load all the lines and create the container so that the size is fixed
     // Otherwise it would be changing and the user viewport would be constantly
     // moving as she/he scrolls
@@ -144,7 +151,7 @@ export class Termynal {
     this.lines = [
       ...this.container.querySelectorAll<HTMLElement>(`[${this.pfx}]`),
     ].concat(this.lineData);
-    for (let line of this.lines) {
+    for (const line of this.lines) {
       line.style.visibility = "hidden";
       this.container.appendChild(line);
     }
@@ -157,7 +164,7 @@ export class Termynal {
   /**
    * Initialise the widget, get lines, clear container and start animation.
    */
-  init() {
+  init(): void {
     /**
      * Calculates width and height of Termynal container.
      * If container is empty and lines are dynamically loaded, defaults to browser `auto` or CSS.
@@ -176,20 +183,20 @@ export class Termynal {
 
     this.container.setAttribute("data-termynal", "");
     this.container.innerHTML = "";
-    for (let line of this.lines) {
+    for (const line of this.lines) {
       line.style.visibility = "visible";
     }
-    this.start();
+    this.start().catch(e => console.error(e));
   }
 
   /**
-   * Start the animation and rener the lines depending on their data attributes.
+   * Start the animation and render the lines depending on their data attributes.
    */
-  async start() {
+  async start(): Promise<void> {
     this.addFinish();
     await this._wait(this.startDelay);
 
-    for (let line of this.lines) {
+    for (const line of this.lines) {
       const type = line.getAttribute(this.pfx);
       const delay = line.getAttribute(`${this.pfx}-delay`) || this.lineDelay;
 
@@ -216,9 +223,9 @@ export class Termynal {
     this.startDelay = this.originalStartDelay;
   }
 
-  generateRestart() {
+  generateRestart(): HTMLAnchorElement {
     const restart = document.createElement("a");
-    restart.onclick = (e) => {
+    restart.onclick = e => {
       e.preventDefault();
       this.container.innerHTML = "";
       this.init();
@@ -229,9 +236,9 @@ export class Termynal {
     return restart;
   }
 
-  generateFinish() {
+  generateFinish(): HTMLAnchorElement {
     const finish = document.createElement("a");
-    finish.onclick = (e) => {
+    finish.onclick = e => {
       e.preventDefault();
       this.lineDelay = 0;
       this.typeDelay = 0;
@@ -258,12 +265,12 @@ export class Termynal {
    * Animate a typed line.
    * @param line - The line element to render.
    */
-  async type(line: HTMLElement) {
+  async type(line: HTMLElement): Promise<void> {
     const chars = [...(line.textContent || "")];
     line.textContent = "";
     this.container.appendChild(line);
 
-    for (let char of chars) {
+    for (const char of chars) {
       const delay =
         line.getAttribute(`${this.pfx}-typeDelay`) || this.typeDelay;
       await this._wait(delay);
@@ -275,7 +282,7 @@ export class Termynal {
    * Animate a progress bar.
    * @param line - The line element to render.
    */
-  async progress(line: HTMLElement) {
+  async progress(line: HTMLElement): Promise<void> {
     const progressLength =
       parseFloat(line.getAttribute(`${this.pfx}-progressLength`) ?? "") ||
       this.progressLength;
@@ -301,9 +308,9 @@ export class Termynal {
    * Helper function for animation delays, called with `await`.
    * @param time - Timeout, in ms.
    */
-  _wait(time: number | string) {
+  _wait(time: number | string): Promise<void> {
     const useTime = typeof time === "string" ? parseFloat(time) : time;
-    return new Promise((resolve) => setTimeout(resolve, useTime));
+    return new Promise(resolve => setTimeout(resolve, useTime));
   }
 
   /**
@@ -313,11 +320,15 @@ export class Termynal {
    * @returns Array of line elements.
    */
   lineDataToElements(lineData: LineData[]): HTMLElement[] {
-    return lineData.map((line) => {
-      let div = document.createElement("div");
-      div.innerHTML = `<span ${this._attributes(line)}>${
-        line.value ?? ""
-      }</span>`;
+    return lineData.map(line => {
+      const div = document.createElement("div");
+      const useValue = line.value ?? "";
+      div.innerHTML = stringIsHTMLElementWithRelevantData(
+        useValue,
+        this.customPfx
+      )
+        ? useValue
+        : `<span ${this._attributes(line)}>${useValue}</span>`;
 
       return div.firstElementChild as HTMLElement;
     });
@@ -329,18 +340,53 @@ export class Termynal {
    * @param line - Line data object.
    * @returns {string} - String of attributes.
    */
-  _attributes(line: Record<string, any>) {
+  _attributes(line: Record<string, any>): string {
     let attrs = "";
-    for (let prop in line) {
+    for (const prop in line) {
       attrs += this.pfx;
 
       if (prop === "type") {
-        attrs += `="${line[prop]}" `;
+        const attrValue: string = line[prop];
+        attrs += `="${attrValue}" `;
       } else if (prop !== "value") {
-        attrs += `-${prop}="${line[prop]}" `;
+        const attrValue: string = line[prop];
+        attrs += `-${prop}="${attrValue}" `;
       }
     }
 
     return attrs;
   }
+}
+
+function stringHasHTMLElements(string: string): boolean {
+  return /<\/?[a-z][\s\S]*>/i.test(string);
+}
+
+function camelCase(str: string): string {
+  return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
+    if (+match === 0) return ""; // or if (/\s+/.test(match)) for white spaces
+    return index === 0 ? match.toLowerCase() : match.toUpperCase();
+  });
+}
+
+function stringIsHTMLElementWithRelevantData(
+  string: string,
+  prefix: string
+): boolean {
+  if (!stringHasHTMLElements(string)) {
+    return false;
+  }
+  const container = document.createElement("div");
+  container.innerHTML = string;
+  const element = container.firstElementChild as HTMLElement;
+  if (!element) {
+    throw new Error("No element found in string.");
+  }
+  const camelCasePrefix = camelCase(prefix);
+  for (const prop in element.dataset) {
+    if (prop.startsWith(camelCasePrefix)) {
+      return true;
+    }
+  }
+  return false;
 }
