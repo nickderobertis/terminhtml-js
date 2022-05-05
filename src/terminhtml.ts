@@ -208,7 +208,7 @@ function createTermynalValueFromPossiblyHTMLString(
     throw new Error("No element found in string");
   }
 
-  elem.textContent = applyReplacements(elem.textContent ?? "", replacements);
+  replaceTextInElement(elem, replacements);
   if (options.type === "input") {
     elem.setAttribute("data-ty", "input");
   }
@@ -230,4 +230,23 @@ function applyReplacements(
       acc.replace(replacement.searchValue, replacement.replaceValue),
     string
   );
+}
+
+function replaceTextInElement(
+  element: ChildNode,
+  replacements: Replacement[]
+): void {
+  for (const childElem of element.childNodes) {
+    if (childElem.childNodes.length > 0) {
+      // Not the bottom of the tree yet, recurse
+      replaceTextInElement(childElem, replacements);
+    } else {
+      // No child elements, replace text content
+      const textContent = childElem.textContent;
+      childElem.textContent = applyReplacements(
+        textContent ?? "",
+        replacements
+      );
+    }
+  }
 }
