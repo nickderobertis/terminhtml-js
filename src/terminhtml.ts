@@ -4,6 +4,8 @@ import {
 } from "./dom-utils";
 import { LineData, Termynal, TermynalOptions } from "./termynal";
 
+const carriageReturnChar = "\r";
+
 /*
  * Custom options for TerminHTML
  */
@@ -119,6 +121,20 @@ export class TerminHTML {
           value,
           prompt,
         });
+      }
+      // TODO: need a better check for carriage return. This could still match
+      //  if it is in the middle of the line. I can't use the approach used for
+      //  prompts because once I assign the value to innerHTML, the carriage
+      //  return \r becomes a line feed \n.
+      else if (line.indexOf("\r") !== -1) {
+        const value = createTermynalValueFromPossiblyHTMLString(line, {
+          replacements: [{ searchValue: carriageReturnChar, replaceValue: "" }],
+          carriageReturn: true,
+        });
+        lineData.push({
+          value,
+          carriageReturn: true,
+        });
       } else {
         lineData.push({
           value: line,
@@ -133,6 +149,12 @@ function textContentStartsWith(elementString: string, string: string): boolean {
   const textContent =
     getTextContentFromStringPossiblyContainingHTML(elementString);
   return textContent.startsWith(string);
+}
+
+function textContentEndsWith(elementString: string, string: string): boolean {
+  const textContent =
+    getTextContentFromStringPossiblyContainingHTML(elementString);
+  return textContent.endsWith(string);
 }
 
 function getTextContentFromStringPossiblyContainingHTML(
@@ -163,6 +185,7 @@ type CreateTermynalValueOptions = {
   replacements?: Replacement[];
   type?: "input";
   prompt?: string;
+  carriageReturn?: boolean;
 };
 
 function createTermynalValueFromPossiblyHTMLString(
@@ -191,6 +214,9 @@ function createTermynalValueFromPossiblyHTMLString(
   }
   if (options.prompt) {
     elem.setAttribute("data-ty-prompt", options.prompt);
+  }
+  if (options.carriageReturn) {
+    elem.setAttribute("data-ty-carriageReturn", "true");
   }
   return elem.outerHTML;
 }

@@ -19,6 +19,7 @@ export type LineData = Partial<{
   delay: number;
   prompt: string;
   type: "input" | "progress";
+  carriageReturn: boolean;
 }>;
 
 /*
@@ -197,6 +198,7 @@ export class Termynal {
     for (const line of this.lines) {
       const type = line.getAttribute(this.pfx);
       const delay = line.getAttribute(`${this.pfx}-delay`) || this.lineDelay;
+      const carriageReturn = !!line.getAttribute(`${this.pfx}-carriageReturn`);
 
       if (type == "input") {
         line.setAttribute(`${this.pfx}-cursor`, this.cursor);
@@ -208,6 +210,11 @@ export class Termynal {
       } else {
         this.container.appendChild(line);
         await this._wait(delay);
+      }
+
+      // TODO: Shouldn't handle carriage return on last line
+      if (carriageReturn) {
+        this.container.removeChild(line);
       }
 
       line.removeAttribute(`${this.pfx}-cursor`);
