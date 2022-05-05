@@ -145,7 +145,12 @@ function getTextContentFromStringPossiblyContainingHTML(
 
   // Create DOM node and then extract text content
   const div = document.createElement("div");
-  div.innerHTML = string;
+  // Content might be HTML with extra spacing around it, so trim it
+  // But need to check that HTML is really the first content. If it is not,
+  // this is a mixed text and HTML string and we need to treat it as text first
+  const trimString = string.trim();
+  const useString = trimString.startsWith("<") ? trimString : string;
+  div.innerHTML = useString;
   return div.textContent ?? "";
 }
 
