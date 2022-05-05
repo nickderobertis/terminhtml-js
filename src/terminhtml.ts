@@ -38,6 +38,11 @@ export type TerminHTMLOptions = {
    * The literal string that starts a new custom prompt
    */
   customPromptLiteralStart: string;
+  /**
+   * Enable automatic scrolling to the bottom of the terminal until the
+   * user scrolls up.
+   */
+  autoScroll: boolean;
 };
 
 /**
@@ -48,6 +53,7 @@ const defaultOptions: TerminHTMLOptions = {
   promptLiteralStart: "$ ",
   customPromptLiteralStart: "# ",
   initNow: false,
+  autoScroll: true,
 };
 
 export class TerminHTML {

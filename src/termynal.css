@@ -13,7 +13,9 @@
 }
 
 [data-termynal] {
-  width: 750px;
+  height: 500px;
+  overflow-y: scroll;
+  text-overflow: wrap;
   max-width: 100%;
   background: var(--color-bg);
   color: var(--color-text);
@@ -25,6 +27,28 @@
   position: relative;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+}
+
+[data-termynal]::-webkit-scrollbar {
+  width: 10px;
+}
+
+[data-termynal]::-webkit-scrollbar-track {
+  opacity: 0;
+}
+
+[data-termynal]::-webkit-scrollbar-thumb {
+  min-height: 20px;
+  background-color: #ffffff20;
+}
+
+pre[data-termynal] {
+  overflow-x: auto;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
 }
 
 [data-termynal]:before {

@@ -66,6 +66,11 @@ export type TermynalOptions = Partial<{
    * Don't initialise the animation.
    */
   noInit: boolean;
+  /**
+   * Enable automatic scrolling to the bottom of the terminal until the
+   * user scrolls up.
+   */
+  autoScroll: boolean;
 }>;
 
 /** Generate a terminal widget. */
@@ -93,6 +98,8 @@ export class Termynal {
   typeDelay = 90;
   lineDelay = 1500;
   finishElement?: HTMLAnchorElement;
+  autoScroll: boolean;
+  origAutoScroll: boolean;
 
   /**
    *
@@ -138,6 +145,9 @@ export class Termynal {
       options.cursor ||
       this.container.getAttribute(`${this.pfx}-cursor`) ||
       "▋";
+    this.autoScroll =
+      typeof options.autoScroll === "undefined" ? true : options.autoScroll;
+    this.origAutoScroll = this.autoScroll;
     this.lines = this.lineDataToElements(options.lineData || []);
     this.loadLines();
     if (!options.noInit) this.init();
@@ -188,6 +198,27 @@ export class Termynal {
     this.start().catch(e => console.error(e));
   }
 
+  private _scrollToBottom(): void {
+    if (this.autoScroll) {
+      this.container.scrollTop = this.container.scrollHeight;
+    }
+  }
+
+  private _toggleAutoScrollBasedOnUserInteraction(): void {
+    // Check if scroll height is not at bottom. If so, this means the user
+    // has scrolled up and we should not keep sticking the scroll to the bottom.
+    if (
+      this.container.scrollTop !==
+      this.container.scrollHeight - this.container.clientHeight
+    ) {
+      this.autoScroll = false;
+    } else {
+      // User has not interacted with the terminal or put it back on the bottom,
+      // go back to the originally set behavior
+      this.autoScroll = this.origAutoScroll;
+    }
+  }
+
   /**
    * Start the animation and render the lines depending on their data attributes.
    */
@@ -200,6 +231,8 @@ export class Termynal {
       const delay = line.getAttribute(`${this.pfx}-delay`) || this.lineDelay;
       const carriageReturn = !!line.getAttribute(`${this.pfx}-carriageReturn`);
 
+      this._toggleAutoScrollBasedOnUserInteraction();
+
       if (type == "input") {
         line.setAttribute(`${this.pfx}-cursor`, this.cursor);
         await this.type(line);
@@ -209,6 +242,7 @@ export class Termynal {
         await this._wait(delay);
       } else {
         this.container.appendChild(line);
+        this._scrollToBottom();
         await this._wait(delay);
       }
 
@@ -274,6 +308,7 @@ export class Termynal {
     const chars = [...(line.textContent || "")];
     line.textContent = "";
     this.container.appendChild(line);
+    this._scrollToBottom();
 
     for (const char of chars) {
       const delay =
