@@ -4,7 +4,7 @@
       "name": "copier-typescript-npm-sphinx",
       "path": "https://github.com/nickderobertis/copier-typescript-npm-sphinx",
       "type": "copier",
-      "version": "deda9fedd34f664f458b7ae15bfc53335dfa10b9",
+      "version": "1e8bd4374603015620f378a948db1b6066d8b2a6",
       "git_url": "https://github.com/nickderobertis/copier-typescript-npm-sphinx",
       "target_version": null,
       "render_relative_root_in_output": ".",
@@ -21,9 +21,10 @@
         "short_description": "Convert HTML blocks with terminal output into animated terminals",
         "main_branch_name": "main",
         "author": "Nick DeRobertis",
-        "repo_username": "nickderobertis"
+        "repo_username": "nickderobertis",
+        "package_filename": "terminhtml"
       },
-      "version": "deda9fedd34f664f458b7ae15bfc53335dfa10b9",
+      "version": "1e8bd4374603015620f378a948db1b6066d8b2a6",
       "add_mode": "local",
       "root": "."
     }
