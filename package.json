@@ -4,6 +4,7 @@
   "description": "Convert HTML blocks with terminal output into animated terminals",
   "main": "./dist/terminhtml.umd.js",
   "module": "./dist/terminhtml.es.js",
+  "types": "./dist/src/index.d.ts",
   "files": [
     "dist/**/*"
   ],
