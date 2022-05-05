@@ -87,8 +87,7 @@ export class Termynal {
   progressChar: string;
   progressPercent: number;
   cursor: string;
-  lineData: HTMLElement[];
-  lines: HTMLElement[] = [];
+  lines: HTMLElement[];
   startDelay = 600;
   typeDelay = 90;
   lineDelay = 1500;
@@ -138,7 +137,7 @@ export class Termynal {
       options.cursor ||
       this.container.getAttribute(`${this.pfx}-cursor`) ||
       "▋";
-    this.lineData = this.lineDataToElements(options.lineData || []);
+    this.lines = this.lineDataToElements(options.lineData || []);
     this.loadLines();
     if (!options.noInit) this.init();
   }
@@ -150,10 +149,6 @@ export class Termynal {
     const finish = this.generateFinish();
     finish.style.visibility = "hidden";
     this.container.appendChild(finish);
-    // Appends dynamically loaded lines to existing line elements.
-    this.lines = [
-      ...this.container.querySelectorAll<HTMLElement>(`[${this.pfx}]`),
-    ].concat(this.lineData);
     for (const line of this.lines) {
       line.style.visibility = "hidden";
       this.container.appendChild(line);
