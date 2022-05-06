@@ -119,6 +119,19 @@ a[data-terminal-control] {
           animation: blink 1s infinite;
 }
 
+[data-terminal-speed-control-container] {
+  display: flex;
+  justify-content: flex-end;
+}
+
+[data-terminal-speed-control] {
+  display: flex;
+  width: 80px;
+  flex-direction: row;
+  justify-content: space-between;
+  color: #aebbff;
+}
+
 
 /* Cursor animation */
 

@@ -99,9 +99,10 @@ export class Termynal {
   startDelay = 600;
   typeDelay = 90;
   lineDelay = 1500;
-  finishElement?: HTMLAnchorElement;
   autoScroll: boolean;
   origAutoScroll: boolean;
+  speedControlElement?: HTMLSpanElement;
+  speedMultiplier = 1;
 
   /**
    *
@@ -159,9 +160,9 @@ export class Termynal {
     // Load all the lines and create the container so that the size is fixed
     // Otherwise it would be changing and the user viewport would be constantly
     // moving as she/he scrolls
-    const finish = this.generateFinish();
-    finish.style.visibility = "hidden";
-    this.container.appendChild(finish);
+    const speedControl = this._generateSpeedControl();
+    speedControl.style.visibility = "hidden";
+    this.container.appendChild(speedControl);
     for (const line of this.lines) {
       line.style.visibility = "hidden";
       this.container.appendChild(line);
@@ -265,8 +266,8 @@ export class Termynal {
       line.removeAttribute(`${this.pfx}-cursor`);
     }
     this.addRestart();
-    if (this.finishElement) {
-      this.finishElement.style.visibility = "hidden";
+    if (this.speedControlElement) {
+      this.speedControlElement.style.visibility = "hidden";
     }
     this.lineDelay = this.originalLineDelay;
     this.typeDelay = this.originalTypeDelay;
@@ -286,19 +287,40 @@ export class Termynal {
     return restart;
   }
 
-  generateFinish(): HTMLAnchorElement {
-    const finish = document.createElement("a");
-    finish.onclick = e => {
+  private _generateSpeedControl(): HTMLSpanElement {
+    const speedControlContainer = document.createElement("span");
+    speedControlContainer.setAttribute(
+      "data-terminal-speed-control-container",
+      ""
+    );
+    const speedControl = document.createElement("span");
+    speedControl.setAttribute("data-terminal-speed-control", "");
+    const slowDown = document.createElement("a");
+    const label = document.createElement("span");
+    slowDown.onclick = e => {
       e.preventDefault();
-      this.lineDelay = 0;
-      this.typeDelay = 0;
-      this.startDelay = 0;
+      console.log("slow down");
+      this.speedMultiplier = this.speedMultiplier / 2;
+      label.innerHTML = `${this.speedMultiplier}x`;
     };
-    finish.href = "#";
-    finish.setAttribute("data-terminal-control", "");
-    finish.innerHTML = "fast →";
-    this.finishElement = finish;
-    return finish;
+    slowDown.innerHTML = "◄";
+    slowDown.setAttribute("data-terminal-control", "");
+    speedControl.appendChild(slowDown);
+    label.innerHTML = `${this.speedMultiplier}x`;
+    speedControl.appendChild(label);
+    const speedUp = document.createElement("a");
+    speedUp.onclick = e => {
+      e.preventDefault();
+      console.log("speed up");
+      this.speedMultiplier = this.speedMultiplier * 2;
+      label.innerHTML = `${this.speedMultiplier}x`;
+    };
+    speedUp.innerHTML = "►";
+    speedUp.setAttribute("data-terminal-control", "");
+    speedControl.appendChild(speedUp);
+    speedControlContainer.appendChild(speedControl);
+    this.speedControlElement = speedControlContainer;
+    return speedControlContainer;
   }
 
   addRestart() {
@@ -307,7 +329,7 @@ export class Termynal {
   }
 
   addFinish() {
-    const finish = this.generateFinish();
+    const finish = this._generateSpeedControl();
     this.container.appendChild(finish);
   }
 
@@ -361,7 +383,8 @@ export class Termynal {
    */
   _wait(time: number | string): Promise<void> {
     const useTime = typeof time === "string" ? parseFloat(time) : time;
-    return new Promise(resolve => setTimeout(resolve, useTime));
+    const multipliedTime = useTime / this.speedMultiplier;
+    return new Promise(resolve => setTimeout(resolve, multipliedTime));
   }
 
   /**
