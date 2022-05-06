@@ -49,6 +49,9 @@ pre[data-termynal] {
   white-space: -pre-wrap;
   white-space: -o-pre-wrap;
   word-wrap: break-word;
+  /* Apply these same styles in a more specific selector to override other pre styles */
+  background: var(--color-bg);
+  color: var(--color-text);
 }
 
 [data-termynal]:before {
