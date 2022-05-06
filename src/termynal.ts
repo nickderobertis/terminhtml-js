@@ -73,6 +73,8 @@ export type TermynalOptions = Partial<{
   autoScroll: boolean;
 }>;
 
+const autoScrollBottomBufferPx = 5;
+
 /** Generate a terminal widget. */
 export class Termynal {
   container: HTMLElement;
@@ -207,16 +209,25 @@ export class Termynal {
   private _toggleAutoScrollBasedOnUserInteraction(): void {
     // Check if scroll height is not at bottom. If so, this means the user
     // has scrolled up and we should not keep sticking the scroll to the bottom.
-    if (
-      this.container.scrollTop !==
-      this.container.scrollHeight - this.container.clientHeight
-    ) {
+    if (!this._isAtBottom()) {
       this.autoScroll = false;
     } else {
       // User has not interacted with the terminal or put it back on the bottom,
       // go back to the originally set behavior
       this.autoScroll = this.origAutoScroll;
     }
+  }
+
+  private _distanceFromBottom(): number {
+    return (
+      this.container.scrollHeight -
+      this.container.scrollTop -
+      this.container.clientHeight
+    );
+  }
+
+  private _isAtBottom(): boolean {
+    return this._distanceFromBottom() <= autoScrollBottomBufferPx;
   }
 
   /**
