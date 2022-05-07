@@ -117,13 +117,13 @@ export class Termynal {
     this.autoScroll =
       typeof options.autoScroll === "undefined" ? true : options.autoScroll;
     this.origAutoScroll = this.autoScroll;
-    this.lines = this.lineDataToElements(lineData);
-    this.loadLines();
+    this.lines = this._lineDataToElements(lineData);
+    this._loadLines();
     this.container.innerHTML = "";
     if (!options.noInit) this.init();
   }
 
-  loadLines(): void {
+  private _loadLines(): void {
     // Load all the lines and create the container so that the size is fixed
     // Otherwise it would be changing and the user viewport would be constantly
     // moving as she/he scrolls
@@ -134,7 +134,7 @@ export class Termynal {
       line.style.visibility = "hidden";
       this.container.appendChild(line);
     }
-    const restart = this.generateRestart();
+    const restart = this._generateRestart();
     restart.style.visibility = "hidden";
     this.container.appendChild(restart);
     this.container.setAttribute("data-termynal", "");
@@ -167,7 +167,7 @@ export class Termynal {
     for (const line of this.lines) {
       line.style.visibility = "visible";
     }
-    this.start().catch(e => console.error(e));
+    this._start().catch(e => console.error(e));
   }
 
   private _scrollToBottom(): void {
@@ -203,8 +203,8 @@ export class Termynal {
   /**
    * Start the animation and render the lines depending on their data attributes.
    */
-  async start(): Promise<void> {
-    this.addFinish();
+  private async _start(): Promise<void> {
+    this._addFinish();
     await this._wait(this.startDelay);
 
     for (const line of this.lines) {
@@ -216,7 +216,7 @@ export class Termynal {
 
       if (type == "input") {
         line.setAttribute(`${this.pfx}-cursor`, this.cursor);
-        await this.type(line);
+        await this._type(line);
         await this._wait(delay);
       } else {
         this.container.appendChild(line);
@@ -231,7 +231,7 @@ export class Termynal {
 
       line.removeAttribute(`${this.pfx}-cursor`);
     }
-    this.addRestart();
+    this._addRestart();
     if (this.speedControlElement) {
       this.speedControlElement.style.visibility = "hidden";
     }
@@ -240,7 +240,7 @@ export class Termynal {
     this.startDelay = this.originalStartDelay;
   }
 
-  generateRestart(): HTMLAnchorElement {
+  private _generateRestart(): HTMLAnchorElement {
     const restart = document.createElement("a");
     restart.onclick = e => {
       e.preventDefault();
@@ -289,12 +289,12 @@ export class Termynal {
     return speedControlContainer;
   }
 
-  addRestart() {
-    const restart = this.generateRestart();
+  private _addRestart() {
+    const restart = this._generateRestart();
     this.container.appendChild(restart);
   }
 
-  addFinish() {
+  private _addFinish() {
     const finish = this._generateSpeedControl();
     this.container.appendChild(finish);
   }
@@ -303,7 +303,7 @@ export class Termynal {
    * Animate a typed line.
    * @param line - The line element to render.
    */
-  async type(line: HTMLElement): Promise<void> {
+  private async _type(line: HTMLElement): Promise<void> {
     const chars = [...(line.textContent || "")];
     line.textContent = "";
     this.container.appendChild(line);
@@ -322,7 +322,7 @@ export class Termynal {
    * Helper function for animation delays, called with `await`.
    * @param time - Timeout, in ms.
    */
-  _wait(time: number | string): Promise<void> {
+  private _wait(time: number | string): Promise<void> {
     const useTime = typeof time === "string" ? parseFloat(time) : time;
     const multipliedTime = useTime / this.speedMultiplier;
     return new Promise(resolve => setTimeout(resolve, multipliedTime));
@@ -334,7 +334,7 @@ export class Termynal {
    * @param lineData - Dynamically loaded lines.
    * @returns Array of line elements.
    */
-  lineDataToElements(lineData: LineData[]): HTMLElement[] {
+  private _lineDataToElements(lineData: LineData[]): HTMLElement[] {
     return lineData.map(line => {
       const div = document.createElement("div");
       const useValue = line.value ?? "";
@@ -355,7 +355,7 @@ export class Termynal {
    * @param line - Line data object.
    * @returns {string} - String of attributes.
    */
-  _attributes(line: Record<string, any>): string {
+  private _attributes(line: Record<string, any>): string {
     let attrs = "";
     for (const prop in line) {
       attrs += this.pfx;
