@@ -1,5 +1,6 @@
 import "./style.css";
 import "../src/termynal.css";
+import "./ansi2html.css";
 import { TerminHTML } from "../src/terminhtml";
 
 function runTerminHTMLApp() {
