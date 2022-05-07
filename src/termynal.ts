@@ -351,6 +351,7 @@ export class Termynal {
         line.getAttribute(`${this.pfx}-typeDelay`) || this.typeDelay;
       await this._wait(delay);
       line.textContent += char;
+      this._scrollToBottom();
     }
   }
 
