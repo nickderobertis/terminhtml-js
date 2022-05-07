@@ -132,27 +132,7 @@ export class Termynal {
    * Initialise the widget, get lines, clear container and start animation.
    */
   init(): void {
-    /**
-     * Calculates width and height of Termynal container.
-     * If container is empty and lines are dynamically loaded, defaults to browser `auto` or CSS.
-     */
-    const containerStyle = getComputedStyle(this.container);
-    const width =
-      containerStyle.width !== "0px" ? containerStyle.width : undefined;
-    if (width) {
-      this.container.style.width = width;
-    }
-    const minHeight =
-      containerStyle.minHeight !== "0px" ? containerStyle.height : undefined;
-    if (minHeight) {
-      this.container.style.minHeight = minHeight;
-    }
-
-    this.container.setAttribute("data-termynal", "");
     this._wipeLines();
-    for (const line of this.lines) {
-      line.style.visibility = "visible";
-    }
     this._start().catch(e => console.error(e));
   }
 
