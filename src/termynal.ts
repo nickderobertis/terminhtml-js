@@ -187,7 +187,7 @@ export class Termynal {
 
   private _scrollToBottom(): void {
     if (this.autoScroll) {
-      this.container.scrollTop = this.container.scrollHeight;
+      this.linesContainer.scrollTop = this.linesContainer.scrollHeight;
     }
   }
 
@@ -205,9 +205,9 @@ export class Termynal {
 
   private _distanceFromBottom(): number {
     return (
-      this.container.scrollHeight -
-      this.container.scrollTop -
-      this.container.clientHeight
+      this.linesContainer.scrollHeight -
+      this.linesContainer.scrollTop -
+      this.linesContainer.clientHeight
     );
   }
 
@@ -279,7 +279,6 @@ export class Termynal {
     const label = document.createElement("span");
     slowDown.onclick = e => {
       e.preventDefault();
-      console.log("slow down");
       this.speedMultiplier = this.speedMultiplier / 2;
       label.innerHTML = `${this.speedMultiplier}x`;
     };
@@ -291,7 +290,6 @@ export class Termynal {
     const speedUp = document.createElement("a");
     speedUp.onclick = e => {
       e.preventDefault();
-      console.log("speed up");
       this.speedMultiplier = this.speedMultiplier * 2;
       label.innerHTML = `${this.speedMultiplier}x`;
     };
@@ -339,6 +337,7 @@ export class Termynal {
       const delay =
         line.getAttribute(`${this.pfx}-typeDelay`) || this.typeDelay;
       await this._wait(delay);
+      this._toggleAutoScrollBasedOnUserInteraction();
       line.textContent += char;
       this._scrollToBottom();
     }
