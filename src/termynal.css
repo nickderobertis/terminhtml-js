@@ -2,12 +2,12 @@
   --color-bg: #252a33;
   --color-text: #eee;
   --color-text-subtle: #a2a2a2;
+  --color-bottom-bar-bg: #212121;
+  --color-terminal-control-text: #aebbff;
 }
 
 [data-termynal] {
   height: 500px;
-  overflow-y: scroll;
-  text-overflow: wrap;
   max-width: 100%;
   background: var(--color-bg);
   color: var(--color-text);
@@ -19,19 +19,6 @@
   position: relative;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-}
-
-[data-termynal]::-webkit-scrollbar {
-  width: 10px;
-}
-
-[data-termynal]::-webkit-scrollbar-track {
-  opacity: 0;
-}
-
-[data-termynal]::-webkit-scrollbar-thumb {
-  min-height: 20px;
-  background-color: #ffffff20;
 }
 
 pre[data-termynal] {
@@ -74,7 +61,7 @@ pre[data-termynal] {
 a[data-terminal-control] {
   text-align: right;
   display: block;
-  color: #aebbff;
+  color: var(--color-terminal-control-text);
 }
 
 [data-ty] {
@@ -122,6 +109,35 @@ a[data-terminal-control] {
   flex-direction: row;
   justify-content: space-between;
   color: #aebbff;
+}
+
+[data-terminal-bottom-bar] {
+  position: absolute;
+  bottom: 0.5em;
+  width: 80%;
+  display: flex;
+  justify-content: flex-end;
+  color: var(--color-terminal-control-text);
+  /* background-color: var(--color-bottom-bar-bg); */
+}
+
+[data-termynal-lines] {
+  height: 365px;
+  overflow-y: scroll;
+  text-overflow: wrap;
+}
+
+[data-termynal-lines]::-webkit-scrollbar {
+  width: 10px;
+}
+
+[data-termynal-lines]::-webkit-scrollbar-track {
+  opacity: 0;
+}
+
+[data-termynal-lines]::-webkit-scrollbar-thumb {
+  min-height: 20px;
+  background-color: #ffffff20;
 }
 
 

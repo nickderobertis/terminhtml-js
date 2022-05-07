@@ -51,7 +51,18 @@ const autoScrollBottomBufferPx = 5;
 
 /** Generate a terminal widget. */
 export class Termynal {
+  /**
+   * Outer container for the terminal to where all styling extends.
+   */
   container: HTMLElement;
+  /**
+   * Inner container element for only the printed lines.
+   */
+  linesContainer: HTMLElement;
+  /**
+   * Element for the bottom bar of the terminal.
+   */
+  bottomBar: HTMLElement;
   /**
    * The prefix for attributes to control Termynal, including data-.
    * Defaults to "data-ty".
@@ -109,6 +120,8 @@ export class Termynal {
     this.origAutoScroll = this.autoScroll;
     this.lines = this._lineDataToElements(lineData);
     this._loadLines();
+    this.linesContainer = this._generateLinesContainer();
+    this.bottomBar = this._generateBottomBar();
     this.container.innerHTML = "";
     if (!options.noInit) this.init();
   }
@@ -117,9 +130,9 @@ export class Termynal {
     // Load all the lines and create the container so that the size is fixed
     // Otherwise it would be changing and the user viewport would be constantly
     // moving as she/he scrolls
-    const speedControl = this._generateSpeedControl();
-    speedControl.style.visibility = "hidden";
-    this.container.appendChild(speedControl);
+    const bottomBar = this._generateBottomBar();
+    bottomBar.style.visibility = "hidden";
+    this.container.appendChild(bottomBar);
     for (const line of this.lines) {
       line.style.visibility = "hidden";
       this.container.appendChild(line);
@@ -153,11 +166,23 @@ export class Termynal {
     }
 
     this.container.setAttribute("data-termynal", "");
-    this.container.innerHTML = "";
+    this._wipeLines();
     for (const line of this.lines) {
       line.style.visibility = "visible";
     }
     this._start().catch(e => console.error(e));
+  }
+
+  private _wipeLines(): void {
+    this.container.innerHTML = "";
+    this.linesContainer.innerHTML = "";
+    this.bottomBar.innerHTML = "";
+    this.bottomBar.appendChild(this._generateSpeedControl());
+    this.container.appendChild(this.linesContainer);
+    this.container.appendChild(this.bottomBar);
+    if (this.speedControlElement) {
+      this.speedControlElement.style.visibility = "visible";
+    }
   }
 
   private _scrollToBottom(): void {
@@ -194,7 +219,6 @@ export class Termynal {
    * Start the animation and render the lines depending on their data attributes.
    */
   private async _start(): Promise<void> {
-    this._addFinish();
     await this._wait(this.startDelay);
 
     for (const line of this.lines) {
@@ -209,7 +233,7 @@ export class Termynal {
         await this._type(line);
         await this._wait(delay);
       } else {
-        this.container.appendChild(line);
+        this._addLine(line);
         this._scrollToBottom();
         await this._wait(delay);
       }
@@ -234,7 +258,7 @@ export class Termynal {
     const restart = document.createElement("a");
     restart.onclick = e => {
       e.preventDefault();
-      this.container.innerHTML = "";
+      this._wipeLines();
       this.init();
     };
     restart.href = "#";
@@ -279,14 +303,26 @@ export class Termynal {
     return speedControlContainer;
   }
 
-  private _addRestart() {
-    const restart = this._generateRestart();
-    this.container.appendChild(restart);
+  private _generateBottomBar(): HTMLDivElement {
+    const bottomBar = document.createElement("div");
+    bottomBar.setAttribute("data-terminal-bottom-bar", "");
+    bottomBar.appendChild(this._generateSpeedControl());
+    return bottomBar;
   }
 
-  private _addFinish() {
-    const finish = this._generateSpeedControl();
-    this.container.appendChild(finish);
+  private _generateLinesContainer(): HTMLElement {
+    const linesContainer = document.createElement("div");
+    linesContainer.setAttribute("data-termynal-lines", "");
+    return linesContainer;
+  }
+
+  private _addRestart() {
+    const restart = this._generateRestart();
+    this.bottomBar.appendChild(restart);
+  }
+
+  private _addLine(line: HTMLElement): void {
+    this.linesContainer.appendChild(line);
   }
 
   /**
@@ -296,7 +332,7 @@ export class Termynal {
   private async _type(line: HTMLElement): Promise<void> {
     const chars = [...(line.textContent || "")];
     line.textContent = "";
-    this.container.appendChild(line);
+    this._addLine(line);
     this._scrollToBottom();
 
     for (const char of chars) {
