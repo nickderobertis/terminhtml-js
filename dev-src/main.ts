@@ -13,6 +13,12 @@ function runDelayApp() {
   });
 }
 
+function runPausedApp() {
+  new TerminHTML("#paused", {
+    initNow: true,
+  });
+}
+
 function runManualInitApp() {
   const term = new TerminHTML("#manual-init");
   const initButton = document.createElement("button");
@@ -27,4 +33,5 @@ function runManualInitApp() {
 
 runTerminHTMLApp();
 runDelayApp();
+runPausedApp();
 runManualInitApp();
