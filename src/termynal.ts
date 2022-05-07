@@ -173,6 +173,8 @@ export class Termynal {
     this.container.setAttribute("data-termynal", "");
   }
 
+  // TODO: If user calls init multiple times, multiple start processes will be running
+  //  at the same time overriding each others' output.
   /**
    * Initialise the widget, get lines, clear container and start animation.
    */
