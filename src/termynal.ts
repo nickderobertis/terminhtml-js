@@ -233,9 +233,7 @@ export class Termynal {
       line.removeAttribute(`${this.pfx}-cursor`);
     }
     this._addRestart();
-    if (this.speedControlElement) {
-      this.speedControlElement.style.visibility = "hidden";
-    }
+    this.bottomBar.removeChild(this.speedControlElement);
     this.lineDelay = this.originalLineDelay;
     this.typeDelay = this.originalTypeDelay;
     this.startDelay = this.originalStartDelay;

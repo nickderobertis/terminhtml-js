@@ -130,6 +130,11 @@ a[data-terminal-control] {
   color: var(--color-terminal-control-text);
 }
 
+[data-terminal-branding] {
+  display: flex;
+  align-items: center;
+}
+
 [data-terminal-branding] a {
   color: var(--color-terminal-control-text);
   font-size: 10px;
