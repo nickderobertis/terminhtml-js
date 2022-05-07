@@ -97,6 +97,7 @@ export class Termynal {
     options: TermynalOptions = {}
   ) {
     this.container = getElementFromSelectorOrElement(container);
+    this.container.setAttribute("data-termynal", "");
     this.customPfx = options.prefix ?? "ty";
     this.pfx = `data-${this.customPfx}`;
     this.originalStartDelay =
@@ -119,28 +120,10 @@ export class Termynal {
       typeof options.autoScroll === "undefined" ? true : options.autoScroll;
     this.origAutoScroll = this.autoScroll;
     this.lines = this._lineDataToElements(lineData);
-    this._loadLines();
     this.linesContainer = this._generateLinesContainer();
     this.bottomBar = this._generateBottomBar();
     this.container.innerHTML = "";
     if (!options.noInit) this.init();
-  }
-
-  private _loadLines(): void {
-    // Load all the lines and create the container so that the size is fixed
-    // Otherwise it would be changing and the user viewport would be constantly
-    // moving as she/he scrolls
-    const bottomBar = this._generateBottomBar();
-    bottomBar.style.visibility = "hidden";
-    this.container.appendChild(bottomBar);
-    for (const line of this.lines) {
-      line.style.visibility = "hidden";
-      this.container.appendChild(line);
-    }
-    const restart = this._generateRestart();
-    restart.style.visibility = "hidden";
-    this.container.appendChild(restart);
-    this.container.setAttribute("data-termynal", "");
   }
 
   // TODO: If user calls init multiple times, multiple start processes will be running
