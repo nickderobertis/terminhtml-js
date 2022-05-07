@@ -153,6 +153,7 @@ export class Termynal {
     this.origAutoScroll = this.autoScroll;
     this.lines = this.lineDataToElements(options.lineData || []);
     this.loadLines();
+    this.container.innerHTML = "";
     if (!options.noInit) this.init();
   }
 
