@@ -64,6 +64,10 @@ export class Termynal {
    */
   bottomBar: HTMLElement;
   /**
+   * Element that allows user to restart the animation.
+   */
+  restartElement: HTMLElement;
+  /**
    * The prefix for attributes to control Termynal, including data-.
    * Defaults to "data-ty".
    */
@@ -122,6 +126,7 @@ export class Termynal {
     this.lines = this._lineDataToElements(lineData);
     this.linesContainer = this._generateLinesContainer();
     this.bottomBar = this._generateBottomBar();
+    this.restartElement = this._generateRestart();
     this.container.innerHTML = "";
     if (!options.noInit) this.init();
   }
@@ -140,7 +145,7 @@ export class Termynal {
     this.container.innerHTML = "";
     this.linesContainer.innerHTML = "";
     this.bottomBar.innerHTML = "";
-    this.bottomBar.appendChild(this._generateSpeedControl());
+    this.bottomBar.appendChild(this.restartElement);
     this.container.appendChild(this.linesContainer);
     this.container.appendChild(this.bottomBar);
     if (this.speedControlElement) {
