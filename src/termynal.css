@@ -2,7 +2,6 @@
   --color-bg: #252a33;
   --color-text: #eee;
   --color-text-subtle: #a2a2a2;
-  --color-bottom-bar-bg: #212121;
   --color-terminal-control-text: #aebbff;
 }
 
@@ -11,7 +10,7 @@
   max-width: 100%;
   background: var(--color-bg);
   color: var(--color-text);
-  font-size: 18px;
+  font-size: 15px;
   /* font-family: 'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', Courier, monospace; */
   font-family: 'Roboto Mono', 'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', Courier, monospace;
   border-radius: 4px;
@@ -22,7 +21,7 @@
 }
 
 pre[data-termynal] {
-  overflow-x: auto;
+  /* overflow-x: auto; */
   white-space: pre-wrap;
   white-space: -moz-pre-wrap;
   white-space: -pre-wrap;
@@ -62,6 +61,7 @@ a[data-terminal-control] {
   text-align: right;
   display: block;
   color: var(--color-terminal-control-text);
+  font-size: 16px;
 }
 
 [data-ty] {
@@ -105,11 +105,21 @@ a[data-terminal-control] {
 
 [data-terminal-speed-control] {
   display: flex;
-  width: 80px;
+  width: 87px;
   flex-direction: row;
   justify-content: space-between;
-  color: #aebbff;
+  align-items: center;
+  color: var(--color-terminal-control-text);
 }
+
+[data-terminal-speed-control] span {
+  font-size: 14px;
+}
+
+[data-terminal-speed-control] a {
+  font-size: 19px;
+}
+
 
 [data-terminal-bottom-bar] {
   position: absolute;
@@ -118,7 +128,6 @@ a[data-terminal-control] {
   display: flex;
   justify-content: flex-end;
   color: var(--color-terminal-control-text);
-  /* background-color: var(--color-bottom-bar-bg); */
 }
 
 [data-termynal-lines] {
