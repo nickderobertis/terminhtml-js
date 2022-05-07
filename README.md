@@ -19,7 +19,7 @@ npm install terminhtml
 ## Usage
 
 ```ts
-import * as TerminHTML from 'terminhtml';
+import * as TerminHTML from "terminhtml";
 ```
 
 ## Development Status
@@ -41,6 +41,13 @@ The library files are stored in `src`, while the files for the development page 
 ## Author
 
 Created by Nick DeRobertis. MIT License.
+
+## Credits
+
+Thank you to Ines Montani for creating the original [Termynal](https://github.com/ines/termynal)
+that is at the core of this project. Thank you to Sebastián Ramírez for adapting Termynal to
+use in the [Typer](https://typer.tiangolo.com/) and [FastAPI](https://fastapi.tiangolo.com/)
+documentation, as that became the inspiration for this project.
 
 [build-img]: https://github.com/nickderobertis/terminhtml-js/actions/workflows/release.yml/badge.svg
 [build-url]: https://github.com/nickderobertis/terminhtml-js/actions/workflows/release.yml

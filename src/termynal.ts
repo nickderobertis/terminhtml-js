@@ -1,13 +1,3 @@
-/**
- * termynal.js
- * A lightweight, modern and extensible animated terminal window, using
- * async/await.
- *
- * @author Ines Montani <ines@ines.io>
- * @version 0.0.1
- * @license MIT
- */
-
 import {
   getElementFromSelectorOrElement,
   stringHasHTMLElements,
@@ -23,7 +13,7 @@ export type LineData = Partial<{
 }>;
 
 /*
- * Custom options for termynal.js
+ * Custom options for Termynal
  */
 export type TermynalOptions = Partial<{
   /**
