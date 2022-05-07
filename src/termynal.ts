@@ -59,10 +59,6 @@ export type TermynalOptions = Partial<{
    */
   cursor: string;
   /**
-   * Dynamically loaded line data objects.
-   */
-  lineData: LineData[];
-  /**
    * Don't initialise the animation.
    */
   noInit: boolean;
@@ -111,6 +107,7 @@ export class Termynal {
    */
   constructor(
     container: string | HTMLElement = "#termynal",
+    lineData: LineData[] = [],
     options: TermynalOptions = {}
   ) {
     this.container = getElementFromSelectorOrElement(container);
@@ -151,7 +148,7 @@ export class Termynal {
     this.autoScroll =
       typeof options.autoScroll === "undefined" ? true : options.autoScroll;
     this.origAutoScroll = this.autoScroll;
-    this.lines = this.lineDataToElements(options.lineData || []);
+    this.lines = this.lineDataToElements(lineData);
     this.loadLines();
     this.container.innerHTML = "";
     if (!options.noInit) this.init();

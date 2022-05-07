@@ -74,9 +74,8 @@ export class TerminHTML {
     const termynalOptions: TermynalOptions = {
       ...rest,
       noInit: !initNow,
-      lineData,
     };
-    this.termynal = new Termynal(container, termynalOptions);
+    this.termynal = new Termynal(container, lineData, termynalOptions);
   }
 
   init() {
