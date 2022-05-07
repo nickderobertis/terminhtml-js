@@ -68,6 +68,10 @@ export class Termynal {
    */
   restartElement: HTMLElement;
   /**
+   * Element that allows user to control the speed of the animation.
+   */
+  speedControlElement: HTMLSpanElement;
+  /**
    * The prefix for attributes to control Termynal, including data-.
    * Defaults to "data-ty".
    */
@@ -87,7 +91,6 @@ export class Termynal {
   lineDelay = 1500;
   autoScroll: boolean;
   origAutoScroll: boolean;
-  speedControlElement?: HTMLSpanElement;
   speedMultiplier = 1;
 
   /**
@@ -127,6 +130,7 @@ export class Termynal {
     this.linesContainer = this._generateLinesContainer();
     this.bottomBar = this._generateBottomBar();
     this.restartElement = this._generateRestart();
+    this.speedControlElement = this._generateSpeedControl();
     this.container.innerHTML = "";
     if (!options.noInit) this.init();
   }
@@ -145,7 +149,7 @@ export class Termynal {
     this.container.innerHTML = "";
     this.linesContainer.innerHTML = "";
     this.bottomBar.innerHTML = "";
-    this.bottomBar.appendChild(this._generateSpeedControl());
+    this.bottomBar.appendChild(this.speedControlElement);
     this.container.appendChild(this.linesContainer);
     this.container.appendChild(this.bottomBar);
     if (this.speedControlElement) {
@@ -272,7 +276,6 @@ export class Termynal {
   private _generateBottomBar(): HTMLDivElement {
     const bottomBar = document.createElement("div");
     bottomBar.setAttribute("data-terminal-bottom-bar", "");
-    bottomBar.appendChild(this._generateSpeedControl());
     return bottomBar;
   }
 
