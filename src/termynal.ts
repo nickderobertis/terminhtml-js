@@ -18,7 +18,7 @@ export type LineData = Partial<{
   class: string;
   delay: number;
   prompt: string;
-  type: "input" | "progress";
+  type: "input";
   carriageReturn: boolean;
 }>;
 
@@ -42,18 +42,6 @@ export type TermynalOptions = Partial<{
    * Delay between each line, in ms.
    */
   lineDelay: number;
-  /**
-   * Number of characters displayed as progress bar.
-   */
-  progressLength: number;
-  /**
-   * Character to use for progress bar, defaults to █.
-   */
-  progressChar: string;
-  /**
-   * Max percent of progress.
-   */
-  progressPercent: number;
   /**
    * Character to use for cursor, defaults to ▋.
    */
@@ -87,9 +75,6 @@ export class Termynal {
   originalStartDelay: number;
   originalTypeDelay: number;
   originalLineDelay: number;
-  progressLength: number;
-  progressChar: string;
-  progressPercent: number;
   cursor: string;
   lines: HTMLElement[];
   startDelay = 600;
@@ -125,22 +110,6 @@ export class Termynal {
       options.lineDelay ||
       parseFloat(this.container.getAttribute(`${this.pfx}-lineDelay`) ?? "") ||
       1500;
-    this.progressLength =
-      options.progressLength ||
-      parseFloat(
-        this.container.getAttribute(`${this.pfx}-progressLength`) || ""
-      ) ||
-      40;
-    this.progressChar =
-      options.progressChar ||
-      this.container.getAttribute(`${this.pfx}-progressChar`) ||
-      "█";
-    this.progressPercent =
-      options.progressPercent ||
-      parseFloat(
-        this.container.getAttribute(`${this.pfx}-progressPercent`) ?? ""
-      ) ||
-      100;
     this.cursor =
       options.cursor ||
       this.container.getAttribute(`${this.pfx}-cursor`) ||
@@ -249,9 +218,6 @@ export class Termynal {
         line.setAttribute(`${this.pfx}-cursor`, this.cursor);
         await this.type(line);
         await this._wait(delay);
-      } else if (type == "progress") {
-        await this.progress(line);
-        await this._wait(delay);
       } else {
         this.container.appendChild(line);
         this._scrollToBottom();
@@ -349,32 +315,6 @@ export class Termynal {
       await this._wait(delay);
       line.textContent += char;
       this._scrollToBottom();
-    }
-  }
-
-  /**
-   * Animate a progress bar.
-   * @param line - The line element to render.
-   */
-  async progress(line: HTMLElement): Promise<void> {
-    const progressLength =
-      parseFloat(line.getAttribute(`${this.pfx}-progressLength`) ?? "") ||
-      this.progressLength;
-    const progressChar =
-      line.getAttribute(`${this.pfx}-progressChar`) || this.progressChar;
-    const chars = progressChar.repeat(progressLength);
-    const progressPercent =
-      line.getAttribute(`${this.pfx}-progressPercent`) || this.progressPercent;
-    line.textContent = "";
-    this.container.appendChild(line);
-
-    for (let i = 1; i < chars.length + 1; i++) {
-      await this._wait(this.typeDelay);
-      const percent = Math.round((i / chars.length) * 100);
-      line.textContent = `${chars.slice(0, i)} ${percent}%`;
-      if (percent > progressPercent) {
-        break;
-      }
     }
   }
 
