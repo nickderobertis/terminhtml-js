@@ -19,6 +19,12 @@ function runPausedApp() {
   });
 }
 
+function runSpinnerApp() {
+  new TerminHTML("#spinner", {
+    initNow: true,
+  });
+}
+
 function runManualInitApp() {
   const term = new TerminHTML("#manual-init");
   const initButton = document.createElement("button");
@@ -34,4 +40,5 @@ function runManualInitApp() {
 runTerminHTMLApp();
 runDelayApp();
 runPausedApp();
+runSpinnerApp();
 runManualInitApp();
