@@ -126,8 +126,19 @@ a[data-terminal-control] {
   bottom: 0.5em;
   width: 80%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   color: var(--color-terminal-control-text);
+}
+
+[data-terminal-branding] a {
+  color: var(--color-terminal-control-text);
+  font-size: 10px;
+}
+
+[data-terminal-branding] span {
+  color: var(--color-terminal-control-text);
+  font-size: 10px;
+  margin-right: 4px;
 }
 
 [data-termynal-lines] {

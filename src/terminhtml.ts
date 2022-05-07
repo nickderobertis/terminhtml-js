@@ -43,6 +43,10 @@ export type TerminHTMLOptions = {
    * user scrolls up.
    */
   autoScroll: boolean;
+  /**
+   * Element containing user-provided branding
+   */
+  brandingElement?: HTMLElement;
 };
 
 /**
@@ -71,14 +75,17 @@ export class TerminHTML {
 
     // Initialize Termynal
     const lineData = this._createLineData();
+    const brandingElement =
+      this.options.brandingElement ?? this._generateBranding();
     const termynalOptions: TermynalOptions = {
       ...rest,
       noInit: !initNow,
+      brandingElement,
     };
     this.termynal = new Termynal(container, lineData, termynalOptions);
   }
 
-  init() {
+  init(): void {
     this.termynal.init();
   }
 
@@ -147,6 +154,19 @@ export class TerminHTML {
       }
     }
     return lineData;
+  }
+
+  private _generateBranding(): HTMLSpanElement {
+    const branding = document.createElement("span");
+    branding.setAttribute("data-terminal-branding", "");
+    const brandingText = document.createElement("span");
+    brandingText.innerHTML = "Created with";
+    branding.appendChild(brandingText);
+    const link = document.createElement("a");
+    link.href = "https://github.com/nickderobertis/terminhtml";
+    link.innerHTML = "TerminHTML";
+    branding.appendChild(link);
+    return branding;
   }
 }
 

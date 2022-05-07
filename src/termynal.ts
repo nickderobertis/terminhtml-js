@@ -45,6 +45,10 @@ export type TermynalOptions = Partial<{
    * user scrolls up.
    */
   autoScroll: boolean;
+  /**
+   * Element containing TerminHTML or user-provided branding
+   */
+  brandingElement: HTMLElement;
 }>;
 
 const autoScrollBottomBufferPx = 5;
@@ -71,6 +75,10 @@ export class Termynal {
    * Element that allows user to control the speed of the animation.
    */
   speedControlElement: HTMLSpanElement;
+  /**
+   * Element containing TerminHTML or user-provided branding
+   */
+  brandingElement: HTMLElement;
   /**
    * The prefix for attributes to control Termynal, including data-.
    * Defaults to "data-ty".
@@ -131,6 +139,8 @@ export class Termynal {
     this.bottomBar = this._generateBottomBar();
     this.restartElement = this._generateRestart();
     this.speedControlElement = this._generateSpeedControl();
+    this.brandingElement =
+      options.brandingElement ?? document.createElement("span");
     this.container.innerHTML = "";
     if (!options.noInit) this.init();
   }
@@ -148,13 +158,18 @@ export class Termynal {
   private _wipeLines(): void {
     this.container.innerHTML = "";
     this.linesContainer.innerHTML = "";
-    this.bottomBar.innerHTML = "";
-    this.bottomBar.appendChild(this.speedControlElement);
+    this._buildBottomBarForRuntime();
     this.container.appendChild(this.linesContainer);
     this.container.appendChild(this.bottomBar);
     if (this.speedControlElement) {
       this.speedControlElement.style.visibility = "visible";
     }
+  }
+
+  private _buildBottomBarForRuntime(): void {
+    this.bottomBar.innerHTML = "";
+    this.bottomBar.appendChild(this.brandingElement);
+    this.bottomBar.appendChild(this.speedControlElement);
   }
 
   private _scrollToBottom(): void {
