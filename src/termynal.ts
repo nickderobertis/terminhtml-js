@@ -227,7 +227,7 @@ export class Termynal {
 
       // TODO: Shouldn't handle carriage return on last line
       if (carriageReturn) {
-        this.container.removeChild(line);
+        this.linesContainer.removeChild(line);
       }
 
       line.removeAttribute(`${this.pfx}-cursor`);
