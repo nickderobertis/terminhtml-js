@@ -145,7 +145,7 @@ export class Termynal {
     this.container.innerHTML = "";
     this.linesContainer.innerHTML = "";
     this.bottomBar.innerHTML = "";
-    this.bottomBar.appendChild(this.restartElement);
+    this.bottomBar.appendChild(this._generateSpeedControl());
     this.container.appendChild(this.linesContainer);
     this.container.appendChild(this.bottomBar);
     if (this.speedControlElement) {
@@ -283,8 +283,7 @@ export class Termynal {
   }
 
   private _addRestart() {
-    const restart = this._generateRestart();
-    this.bottomBar.appendChild(restart);
+    this.bottomBar.appendChild(this.restartElement);
   }
 
   private _addLine(line: HTMLElement): void {
