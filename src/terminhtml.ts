@@ -163,7 +163,7 @@ export class TerminHTML {
     brandingText.innerHTML = "Created with";
     branding.appendChild(brandingText);
     const link = document.createElement("a");
-    link.href = "https://github.com/nickderobertis/terminhtml";
+    link.href = "https://nickderobertis.github.io/terminhtml/";
     link.innerHTML = "TerminHTML";
     branding.appendChild(link);
     return branding;
