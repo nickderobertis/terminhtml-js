@@ -52,6 +52,13 @@ term.init();
 
 See [this example on CodePen](https://codepen.io/nickderobertis/pen/dydOjra).
 
+### Bootstrap
+
+Instead of using the JavaScript API, you can also use [terminhtml-bootstrap](https://github.com/nickderobertis/terminhtml-bootstrap) to initialize TerminHTML. Simply include the script tag in your HTML head, and any
+blocks with the class `terminhtml` will be initialized automatically.
+
+See [an example on CodePen](https://codepen.io/nickderobertis/pen/YzepOpK)
+
 ### Advanced Usage
 
 See the type definitions for TerminHTML, there are many options you can pass to
