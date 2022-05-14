@@ -1,5 +1,5 @@
-const path = require("path")
-const { defineConfig } = require("vite")
+const path = require("path");
+const { defineConfig } = require("vite");
 
 module.exports = defineConfig({
   root: path.resolve(__dirname, "./dev-src"),
@@ -7,7 +7,7 @@ module.exports = defineConfig({
     lib: {
       entry: path.resolve(__dirname, "src/index.ts"),
       name: "terminhtml",
-      fileName: (format) => `terminhtml.${format}.js`
+      fileName: format => `terminhtml.${format}.js`,
     },
     outDir: path.resolve(__dirname, "./dist"),
     rollupOptions: {
@@ -17,8 +17,8 @@ module.exports = defineConfig({
       output: {
         // Provide global variables to use in the UMD build
         // for externalized deps
-        globals: {}
-      }
+        globals: {},
+      },
     },
     sourcemap: true,
   },
@@ -32,5 +32,6 @@ module.exports = defineConfig({
         "./test/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"
       ),
     ],
+    environment: "jsdom",
   },
-})
+});
