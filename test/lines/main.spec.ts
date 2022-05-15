@@ -35,7 +35,7 @@ describe("createElementFromLineData input elements", () => {
 
   it("hoists HTML values to outer HTML element", () => {
     const value = `<span data-ty="input" data-ty-carriageReturn="true" data-ty-delay="100" data-irrelevant="yes">hello</span>`;
-    const element = createElementFromLineData({ value });
+    const element = createElementFromLineData({ value, type: "input" });
     expect(element.innerHTML).toBe("hello");
     expect(element.getAttribute("data-ty")).toEqual("input");
     expect(element.getAttribute("data-ty-carriageReturn")).toEqual("true");
