@@ -8,11 +8,31 @@ export function createCopyToClipboardButton(
     button.style.visibility = "hidden";
   }
   button.appendChild(document.createTextNode("📋"));
+  const popUp = createSuccessfulCopyPopUp();
   button.addEventListener("click", () => {
-    console.log(`copying ${text} to clipboard`);
-    navigator.clipboard.writeText(text).catch(console.error);
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        if (!button.parentElement) {
+          throw new Error("button was clicked but has no parent");
+        }
+        button.parentElement.appendChild(popUp);
+        setTimeout(() => {
+          if (button.parentElement) {
+            button.parentElement.removeChild(popUp);
+          }
+        }, 2000);
+      })
+      .catch(console.error);
   });
   return button;
+}
+
+function createSuccessfulCopyPopUp(): HTMLElement {
+  const popUp = document.createElement("div");
+  popUp.setAttribute("data-terminal-copy-popup", "true");
+  popUp.appendChild(document.createTextNode("Copied!"));
+  return popUp;
 }
 
 type RemoveListenersCallback = () => void;

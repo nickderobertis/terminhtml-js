@@ -3,6 +3,8 @@
   --color-text: #eee;
   --color-text-subtle: #a2a2a2;
   --color-terminal-control-text: #aebbff;
+  --color-copied-background: #b2d7a4;
+  --color-copied-text: #252a33;
 }
 
 [data-termynal] {
@@ -67,6 +69,7 @@ a[data-terminal-control] {
 [data-ty] {
   display: block;
   line-height: 2;
+  position: relative;
 }
 
 [data-ty]:before {
@@ -175,6 +178,21 @@ a[data-terminal-control] {
   background: transparent;
   left: -0.4em;
   border-width: 0px;
+}
+
+[data-terminal-copy-popup] {
+  position: absolute;
+  top: 1em;
+  left: 1em;
+  background-color: var(--color-copied-background);
+  color: var(--color-copied-text);
+  border-width: 2px;
+  border-radius: 5px;
+  border-color: gray;
+  border-style: outset;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  box-shadow: 1px 1px 1px rgb(71, 71, 71);
 }
 
 /* Cursor animation */
