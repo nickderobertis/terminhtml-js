@@ -2,8 +2,7 @@ import { LineData, lineDataToBasicElement } from "./base";
 
 export function createElementFromLineData(
   lineData: LineData,
-  pfx: string,
-  customPfx: string
+  customPfx = "ty"
 ): HTMLElement {
-  return lineDataToBasicElement(lineData, pfx, customPfx);
+  return lineDataToBasicElement(lineData, customPfx);
 }

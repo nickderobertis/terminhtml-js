@@ -334,7 +334,7 @@ export class Termynal {
    */
   private _lineDataToElements(lineData: LineData[]): HTMLElement[] {
     const createElement = (line: LineData) =>
-      createElementFromLineData(line, this.pfx, this.customPfx);
+      createElementFromLineData(line, this.customPfx);
     return lineData.map(createElement);
   }
 }

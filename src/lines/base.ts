@@ -11,9 +11,9 @@ export type LineData = Partial<{
 
 export function lineDataToBasicElement(
   line: LineData,
-  pfx: string,
-  customPfx: string
+  customPfx = "ty"
 ): HTMLElement {
+  const pfx = `data-${customPfx}`;
   const div = document.createElement("div");
   const useValue = line.value ?? "";
   div.innerHTML = _stringIsHTMLElementWithRelevantData(useValue, customPfx)
