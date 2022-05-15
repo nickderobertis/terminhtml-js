@@ -30,20 +30,27 @@ export function lineDataToBasicElement(
  * @returns {string} - String of attributes.
  */
 function _attributes(line: Record<string, any>, pfx: string): string {
-  let attrs = "";
-  for (const prop in line) {
-    attrs += pfx;
+  const attrValuePairs: string[][] = [];
 
-    if (prop === "type") {
-      const attrValue: string = line[prop];
-      attrs += `="${attrValue}" `;
-    } else if (prop !== "value") {
-      const attrValue: string = line[prop];
-      attrs += `-${prop}="${attrValue}" `;
+  for (const key in line) {
+    if (["value", "type"].indexOf(key) !== -1) {
+      // Value handled outside of this function. Type handled below.
+      continue;
     }
+    const value = line[key];
+    if (value === undefined) {
+      continue;
+    }
+    attrValuePairs.push([pfx + "-" + key, value]);
   }
 
-  return attrs;
+  const valueForPlainPfxAttr: string = line.type ?? "";
+  const attributesFromData = attrValuePairs.map(
+    pair => `${pair[0]}="${pair[1]}"`
+  );
+  const alwaysAttributes = [`data-ty=${valueForPlainPfxAttr}`];
+
+  return [...alwaysAttributes, ...attributesFromData].join(" ");
 }
 
 function _stringIsHTMLElementWithRelevantData(
