@@ -2,7 +2,8 @@ import {
   getElementFromSelectorOrElement,
   stringHasHTMLElements,
 } from "./dom-utils";
-import { LineData, Termynal, TermynalOptions } from "./termynal";
+import type { LineData } from "./lines";
+import { Termynal, TermynalOptions } from "./termynal";
 
 const carriageReturnChar = "\r";
 

@@ -1,16 +1,6 @@
-import {
-  getElementFromSelectorOrElement,
-  stringHasHTMLElements,
-} from "./dom-utils";
-
-export type LineData = Partial<{
-  value: string;
-  class: string;
-  delay: number;
-  prompt: string;
-  type: "input";
-  carriageReturn: boolean;
-}>;
+import { getElementFromSelectorOrElement } from "./dom-utils";
+import type { LineData } from "./lines";
+import { createElementFromLineData } from "./lines";
 
 /*
  * Custom options for Termynal
@@ -343,73 +333,8 @@ export class Termynal {
    * @returns Array of line elements.
    */
   private _lineDataToElements(lineData: LineData[]): HTMLElement[] {
-    return lineData.map(line => {
-      const div = document.createElement("div");
-      const useValue = line.value ?? "";
-      div.innerHTML = stringIsHTMLElementWithRelevantData(
-        useValue,
-        this.customPfx
-      )
-        ? useValue
-        : `<span ${this._attributes(line)}>${useValue}</span>`;
-
-      return div.firstElementChild as HTMLElement;
-    });
+    const createElement = (line: LineData) =>
+      createElementFromLineData(line, this.pfx, this.customPfx);
+    return lineData.map(createElement);
   }
-
-  /**
-   * Helper function for generating attributes string.
-   *
-   * @param line - Line data object.
-   * @returns {string} - String of attributes.
-   */
-  private _attributes(line: Record<string, any>): string {
-    let attrs = "";
-    for (const prop in line) {
-      attrs += this.pfx;
-
-      if (prop === "type") {
-        const attrValue: string = line[prop];
-        attrs += `="${attrValue}" `;
-      } else if (prop !== "value") {
-        const attrValue: string = line[prop];
-        attrs += `-${prop}="${attrValue}" `;
-      }
-    }
-
-    return attrs;
-  }
-}
-
-function camelCase(str: string): string {
-  return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
-    if (+match === 0) return ""; // or if (/\s+/.test(match)) for white spaces
-    return index === 0 ? match.toLowerCase() : match.toUpperCase();
-  });
-}
-
-function stringIsHTMLElementWithRelevantData(
-  string: string,
-  prefix: string
-): boolean {
-  if (!stringHasHTMLElements(string)) {
-    return false;
-  }
-  const container = document.createElement("div");
-  container.innerHTML = string;
-  const element = container.firstElementChild as HTMLElement;
-  if (!element) {
-    // This must have been an incomplete HTML element, e.g. </span>
-    console.warn(
-      `Detected incomplete HTML element ${string} on its own line. Keep HTML blocks on the same line`
-    );
-    return false;
-  }
-  const camelCasePrefix = camelCase(prefix);
-  for (const prop in element.dataset) {
-    if (prop.startsWith(camelCasePrefix)) {
-      return true;
-    }
-  }
-  return false;
 }
