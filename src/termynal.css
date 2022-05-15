@@ -165,6 +165,17 @@ a[data-terminal-control] {
   background-color: #ffffff20;
 }
 
+[data-terminal-copy-button] {
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  width: 1.3em;
+  text-align: center;
+  padding: 0;
+  background: transparent;
+  left: -0.4em;
+  border-width: 0px;
+}
 
 /* Cursor animation */
 

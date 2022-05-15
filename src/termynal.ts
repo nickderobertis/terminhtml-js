@@ -1,3 +1,7 @@
+import {
+  createCopyToClipboardButton,
+  createEventListenerToToggleCopyToClipboardVisibility,
+} from "./copy-button";
 import { getElementFromSelectorOrElement } from "./dom-utils";
 import type { LineData } from "./lines";
 import { createElementFromLineData } from "./lines";
@@ -198,7 +202,11 @@ export class Termynal {
   private async _start(): Promise<void> {
     await this._wait(this.startDelay);
 
-    for (const line of this.lines) {
+    // Copy lines so that we can freely modify them and then restart the animation
+    // without worrying about the original lines being modified.
+    const lines = this.lines.map(line => line.cloneNode(true) as HTMLElement);
+
+    for (const line of lines) {
       const type = line.getAttribute(this.pfx);
       const delay = line.getAttribute(`${this.pfx}-delay`) || this.lineDelay;
       const carriageReturn = !!line.getAttribute(`${this.pfx}-carriageReturn`);
@@ -301,8 +309,14 @@ export class Termynal {
    * @param line - The line element to render.
    */
   private async _type(line: HTMLElement): Promise<void> {
-    const chars = [...(line.textContent || "")];
+    const text = line.textContent ?? "";
+    const chars = [...text];
     line.textContent = "";
+    const copyButton = createCopyToClipboardButton(text, false);
+    const typingArea = document.createElement("span");
+    createEventListenerToToggleCopyToClipboardVisibility(line, copyButton);
+    line.appendChild(copyButton);
+    line.appendChild(typingArea);
     this._addLine(line);
     this._scrollToBottom();
 
@@ -311,7 +325,7 @@ export class Termynal {
         line.getAttribute(`${this.pfx}-typeDelay`) || this.typeDelay;
       await this._wait(delay);
       this._toggleAutoScrollBasedOnUserInteraction();
-      line.textContent += char;
+      typingArea.textContent += char;
       this._scrollToBottom();
     }
   }
