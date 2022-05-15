@@ -8,7 +8,7 @@ type ElemAndTerm = {
   term: TerminHTML;
 };
 
-function createTerminHTMLBlock(): ElemAndTerm {
+function createHTMLTerminHTMLBlock(): ElemAndTerm {
   const pre = document.createElement("pre");
   const inputSpan = document.createElement("span");
   inputSpan.textContent = "$ echo woo";
@@ -21,6 +21,33 @@ function createTerminHTMLBlock(): ElemAndTerm {
   const term = new TerminHTML(pre);
   document.body.appendChild(pre);
   return { element: pre, term };
+}
+
+function createTextTerminHTMLBlock(): ElemAndTerm {
+  const pre = document.createElement("pre");
+  pre.textContent = "$ echo woo\nwoo";
+  const term = new TerminHTML(pre);
+  document.body.appendChild(pre);
+  return { element: pre, term };
+}
+
+async function expectTerminHTMLToInitialize(element: HTMLElement) {
+  // Check for speed control
+  await findByText(element, "1x");
+  // Check for branding
+  await findByText(element, "Created with");
+  // Animation has not run, so input and output do not exist yet
+  expect(queryByText(element, "echo woo")).toBeNull();
+  expect(queryByText(element, "woo")).toBeNull();
+
+  await waitForAnimation();
+
+  // Check for input displayed
+  const inputElem = await findByText(element, "echo woo");
+  expect(inputElem.getAttribute("data-ty")).toEqual("input");
+  // Check for output displayed
+  const outputElem = await findByText(element, "woo");
+  expect(outputElem.getAttribute("data-ty")).toBeFalsy();
 }
 
 async function waitForAnimation() {
@@ -43,28 +70,19 @@ describe("TerminHTML", () => {
   });
 
   it("creates a blank, uninitialized terminal", () => {
-    const { element } = createTerminHTMLBlock();
+    const { element } = createHTMLTerminHTMLBlock();
     expect(element.hasAttribute("data-termynal")).toBe(true);
   });
 
-  it("initializes the terminal", async () => {
-    const { element, term } = createTerminHTMLBlock();
+  it("initializes the terminal with text", async () => {
+    const { element, term } = createTextTerminHTMLBlock();
     term.init();
-    // Check for speed control
-    await findByText(element, "1x");
-    // Check for branding
-    await findByText(element, "Created with");
-    // Animation has not run, so input and output do not exist yet
-    expect(queryByText(element, "echo woo")).toBeNull();
-    expect(queryByText(element, "woo")).toBeNull();
+    await expectTerminHTMLToInitialize(element);
+  });
 
-    await waitForAnimation();
-
-    // Check for input displayed
-    const inputElem = await findByText(element, "echo woo");
-    expect(inputElem.getAttribute("data-ty")).toEqual("input");
-    // Check for output displayed
-    const outputElem = await findByText(element, "woo");
-    expect(outputElem.getAttribute("data-ty")).toEqual(null);
+  it("initializes the terminal with HTML", async () => {
+    const { element, term } = createHTMLTerminHTMLBlock();
+    term.init();
+    await expectTerminHTMLToInitialize(element);
   });
 });
