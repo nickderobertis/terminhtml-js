@@ -32,4 +32,14 @@ describe("createElementFromLineData input elements", () => {
     expect(element.textContent).toBe(value);
     expect(element.getAttribute("data-ty")).toEqual("input");
   });
+
+  it("hoists HTML values to outer HTML element", () => {
+    const value = `<span data-ty="input" data-ty-carriageReturn="true" data-ty-delay="100" data-irrelevant="yes">hello</span>`;
+    const element = createElementFromLineData({ value });
+    expect(element.innerHTML).toBe("hello");
+    expect(element.getAttribute("data-ty")).toEqual("input");
+    expect(element.getAttribute("data-ty-carriageReturn")).toEqual("true");
+    expect(element.getAttribute("data-ty-delay")).toEqual("100");
+    expect(element.getAttribute("data-irrelevant")).toBe("yes");
+  });
 });
