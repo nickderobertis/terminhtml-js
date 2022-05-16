@@ -8,6 +8,7 @@ import {
   transformLineForDisplay,
   TransformLineForDisplayOptions,
 } from "./line-display";
+import { BottomBar, createBottomBar } from "./bottom-bar";
 
 /*
  * Custom options for Termynal
@@ -65,21 +66,9 @@ export class Termynal {
    */
   topBar: HTMLElement;
   /**
-   * Element for the bottom bar of the terminal.
+   * Bottom bar of the terminal: contains the element and functions to control it.
    */
-  bottomBar: HTMLElement;
-  /**
-   * Element that allows user to restart the animation.
-   */
-  restartElement: HTMLElement;
-  /**
-   * Element that allows user to control the speed of the animation.
-   */
-  speedControlElement: HTMLSpanElement;
-  /**
-   * Element containing TerminHTML or user-provided branding
-   */
-  brandingElement: HTMLElement;
+  bottomBar: BottomBar;
   /**
    * The prefix for attributes to control Termynal, including data-.
    * Defaults to "data-ty".
@@ -138,9 +127,9 @@ export class Termynal {
     this.origAutoScroll = this.autoScroll;
     this.lines = this._lineDataToElements(lineData);
     this.linesContainer = this._generateLinesContainer();
-    this.bottomBar = this._generateBottomBar();
-    this.restartElement = this._generateRestart();
-    this.speedControlElement = this._generateSpeedControl();
+    const brandingElement =
+      options.brandingElement ?? document.createElement("span");
+    this.bottomBar = this._generateBottomBar(brandingElement);
     this.copyText = linesToCopyText(this.lines, this.pfx);
     const { topBar, copyButton } = createTopBar({ copyText: this.copyText });
     this.topBar = topBar;
@@ -148,8 +137,6 @@ export class Termynal {
       this.container,
       copyButton
     );
-    this.brandingElement =
-      options.brandingElement ?? document.createElement("span");
     this.container.innerHTML = "";
     if (!options.noInit) this.init();
   }
@@ -167,19 +154,10 @@ export class Termynal {
   private _wipeLines(): void {
     this.container.innerHTML = "";
     this.linesContainer.innerHTML = "";
-    this._buildBottomBarForRuntime();
     this.container.appendChild(this.topBar);
     this.container.appendChild(this.linesContainer);
-    this.container.appendChild(this.bottomBar);
-    if (this.speedControlElement) {
-      this.speedControlElement.style.visibility = "visible";
-    }
-  }
-
-  private _buildBottomBarForRuntime(): void {
-    this.bottomBar.innerHTML = "";
-    this.bottomBar.appendChild(this.brandingElement);
-    this.bottomBar.appendChild(this.speedControlElement);
+    this.container.appendChild(this.bottomBar.element);
+    this.bottomBar.switchToSpeedControl();
   }
 
   private _scrollToBottom(): void {
@@ -246,74 +224,37 @@ export class Termynal {
 
       line.removeAttribute(`${this.pfx}-cursor`);
     }
-    this._addRestart();
-    this.bottomBar.removeChild(this.speedControlElement);
+    this.bottomBar.switchToRestart();
     this.lineDelay = this.originalLineDelay;
     this.typeDelay = this.originalTypeDelay;
     this.startDelay = this.originalStartDelay;
   }
 
-  private _generateRestart(): HTMLAnchorElement {
-    const restart = document.createElement("a");
-    restart.onclick = e => {
-      e.preventDefault();
-      this._wipeLines();
+  private _generateBottomBar(brandingElement: HTMLElement): BottomBar {
+    const onSpeedUp = () => {
+      this.speedMultiplier = this.speedMultiplier * 2;
+      return this.speedMultiplier;
+    };
+    const onSlowDown = () => {
+      this.speedMultiplier = this.speedMultiplier / 2;
+      return this.speedMultiplier;
+    };
+    const onRestart = () => {
       this.init();
     };
-    restart.href = "#";
-    restart.setAttribute("data-terminal-control", "");
-    restart.innerHTML = "restart ↻";
-    return restart;
-  }
 
-  private _generateSpeedControl(): HTMLSpanElement {
-    const speedControlContainer = document.createElement("span");
-    speedControlContainer.setAttribute(
-      "data-terminal-speed-control-container",
-      ""
-    );
-    const speedControl = document.createElement("span");
-    speedControl.setAttribute("data-terminal-speed-control", "");
-    const slowDown = document.createElement("a");
-    const label = document.createElement("span");
-    slowDown.onclick = e => {
-      e.preventDefault();
-      this.speedMultiplier = this.speedMultiplier / 2;
-      label.innerHTML = `${this.speedMultiplier}x`;
-    };
-    slowDown.innerHTML = "◄";
-    slowDown.setAttribute("data-terminal-control", "");
-    speedControl.appendChild(slowDown);
-    label.innerHTML = `${this.speedMultiplier}x`;
-    speedControl.appendChild(label);
-    const speedUp = document.createElement("a");
-    speedUp.onclick = e => {
-      e.preventDefault();
-      this.speedMultiplier = this.speedMultiplier * 2;
-      label.innerHTML = `${this.speedMultiplier}x`;
-    };
-    speedUp.innerHTML = "►";
-    speedUp.setAttribute("data-terminal-control", "");
-    speedControl.appendChild(speedUp);
-    speedControlContainer.appendChild(speedControl);
-    this.speedControlElement = speedControlContainer;
-    return speedControlContainer;
-  }
-
-  private _generateBottomBar(): HTMLDivElement {
-    const bottomBar = document.createElement("div");
-    bottomBar.setAttribute("data-terminal-bottom-bar", "");
-    return bottomBar;
+    return createBottomBar({
+      brandingElement,
+      onSpeedUp,
+      onSlowDown,
+      onRestart,
+    });
   }
 
   private _generateLinesContainer(): HTMLElement {
     const linesContainer = document.createElement("div");
     linesContainer.setAttribute("data-termynal-lines", "");
     return linesContainer;
-  }
-
-  private _addRestart() {
-    this.bottomBar.appendChild(this.restartElement);
   }
 
   private _addLine(
