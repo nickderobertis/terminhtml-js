@@ -5,6 +5,8 @@
   --color-terminal-control-text: #aebbff;
   --color-copied-background: #b2d7a4;
   --color-copied-text: #252a33;
+
+  --terminal-padding-left: 45px;
 }
 
 [data-termynal] {
@@ -126,6 +128,7 @@ a[data-terminal-control] {
   display: flex;
   justify-content: space-between;
   color: var(--color-terminal-control-text);
+  padding-left: var(--terminal-padding-left);
 }
 
 [data-terminal-branding] {
@@ -151,7 +154,7 @@ a[data-terminal-control] {
 }
 
 [data-termynal-lines] > span {
-  padding-left: 45px;
+  padding-left: var(--terminal-padding-left);
 }
 
 [data-termynal-lines]::-webkit-scrollbar {
@@ -172,7 +175,7 @@ a[data-terminal-control] {
   position: relative;
   overflow: hidden;
   text-align: center;
-  width: 45px;
+  width: var(--terminal-padding-left);
   text-align: center;
   /* padding: 0; */
   padding-left: 19px;
