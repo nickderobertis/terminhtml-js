@@ -7,7 +7,8 @@ export function createCopyToClipboardButton(
   if (!visible) {
     button.style.visibility = "hidden";
   }
-  button.appendChild(document.createTextNode("📋"));
+  const icon = createCopyButtonIcon();
+  button.appendChild(icon);
   const popUp = createSuccessfulCopyPopUp();
   button.addEventListener("click", () => {
     navigator.clipboard
@@ -33,6 +34,19 @@ function createSuccessfulCopyPopUp(): HTMLElement {
   popUp.setAttribute("data-terminal-copy-popup", "true");
   popUp.appendChild(document.createTextNode("Copied!"));
   return popUp;
+}
+
+function createCopyButtonIcon(): HTMLElement {
+  const iconContainer = document.createElement("div");
+  iconContainer.innerHTML = `
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copy" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <title>Copy to clipboard</title>
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+  <rect x="8" y="8" width="12" height="12" rx="2"></rect>
+  <path d="M16 8v-2a2 2 0 0 0 -2 -2h-8a2 2 0 0 0 -2 2v8a2 2 0 0 0 2 2h2"></path>
+</svg>
+`;
+  return iconContainer.firstElementChild as HTMLElement;
 }
 
 type RemoveListenersCallback = () => void;
