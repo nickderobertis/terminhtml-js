@@ -1,4 +1,4 @@
-import { findByLabelText, findByText, fireEvent } from "@testing-library/dom";
+import { findByLabelText, fireEvent } from "@testing-library/dom";
 import { expect, it } from "vitest";
 import { createCopyToClipboardButton } from "../src/copy-button";
 import { transformLineForDisplay } from "../src/line-display";

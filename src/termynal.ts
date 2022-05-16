@@ -1,12 +1,8 @@
-import {
-  createCopyToClipboardButton,
-  createEventListenerToToggleCopyToClipboardVisibility,
-} from "./copy-button";
+import { createEventListenerToToggleCopyToClipboardVisibility } from "./copy-button";
 import { getElementFromSelectorOrElement } from "./dom-utils";
 import { prepareEmptyInputLine } from "./prepare-input-line";
 import type { LineData } from "./lines";
 import { createElementFromLineData } from "./lines";
-import { createPromptElement } from "./prompt";
 import { createTopBar, linesToCopyText } from "./top-bar";
 import {
   transformLineForDisplay,
