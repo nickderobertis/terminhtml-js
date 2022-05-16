@@ -3,6 +3,7 @@ import {
   createEventListenerToToggleCopyToClipboardVisibility,
 } from "./copy-button";
 import { getElementFromSelectorOrElement } from "./dom-utils";
+import { transformInputLineForDisplay } from "./input-display";
 import type { LineData } from "./lines";
 import { createElementFromLineData } from "./lines";
 import { createPromptElement } from "./prompt";
@@ -324,20 +325,7 @@ export class Termynal {
    * @param line - The line element to render.
    */
   private async _type(line: HTMLElement): Promise<void> {
-    const text = line.textContent ?? "";
-    const chars = [...text];
-    line.textContent = "";
-    const copyButton = createCopyToClipboardButton(text, {
-      visible: false,
-      buttonPfx: "line",
-    });
-    const promptText = line.getAttribute(`${this.pfx}-prompt`);
-    const prompt = createPromptElement(promptText);
-    const typingArea = document.createElement("span");
-    createEventListenerToToggleCopyToClipboardVisibility(line, copyButton);
-    line.appendChild(copyButton);
-    line.appendChild(prompt);
-    line.appendChild(typingArea);
+    const { chars, typingArea } = transformInputLineForDisplay(line, this.pfx);
     this._addLine(line);
     this._scrollToBottom();
 
