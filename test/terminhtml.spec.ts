@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
-import { findByText, queryByText } from "@testing-library/dom";
+import { findByText, fireEvent, queryByText } from "@testing-library/dom";
 import TerminHTML from "../src";
 import "../src/termynal.css";
 
@@ -84,6 +84,18 @@ describe("TerminHTML", () => {
   it("initializes the terminal with HTML", async () => {
     const { element, term } = createHTMLTerminHTMLBlock();
     term.init();
+    await expectTerminHTMLToInitialize(element);
+  });
+
+  it("restarts the terminal", async () => {
+    const { element, term } = createTextTerminHTMLBlock();
+    term.init();
+    await expectTerminHTMLToInitialize(element);
+    const restart = await findByText(element, "restart ↻");
+    fireEvent.click(restart);
+    // Animation has been reset, so input and output do not exist yet
+    expect(queryByText(element, "echo woo")).toBeNull();
+    expect(queryByText(element, "woo")).toBeNull();
     await expectTerminHTMLToInitialize(element);
   });
 });
