@@ -5,6 +5,7 @@ import {
 import { getElementFromSelectorOrElement } from "./dom-utils";
 import type { LineData } from "./lines";
 import { createElementFromLineData } from "./lines";
+import { createPromptElement } from "./prompt";
 
 /*
  * Custom options for Termynal
@@ -313,9 +314,12 @@ export class Termynal {
     const chars = [...text];
     line.textContent = "";
     const copyButton = createCopyToClipboardButton(text, false);
+    const promptText = line.getAttribute(`${this.pfx}-prompt`);
+    const prompt = createPromptElement(promptText);
     const typingArea = document.createElement("span");
     createEventListenerToToggleCopyToClipboardVisibility(line, copyButton);
     line.appendChild(copyButton);
+    line.appendChild(prompt);
     line.appendChild(typingArea);
     this._addLine(line);
     this._scrollToBottom();

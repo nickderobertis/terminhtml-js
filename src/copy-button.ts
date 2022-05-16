@@ -3,7 +3,7 @@ export function createCopyToClipboardButton(
   visible = true
 ): HTMLElement {
   const button = document.createElement("button");
-  button.setAttribute(`data-terminal-copy-button`, "true");
+  button.setAttribute(`data-terminal-line-copy-button`, "true");
   if (!visible) {
     button.style.visibility = "hidden";
   }
