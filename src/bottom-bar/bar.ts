@@ -24,24 +24,27 @@ export function createBottomBar({
   bottomBar.setAttribute("data-terminal-bottom-bar", "");
 
   bottomBar.appendChild(brandingElement);
+  const terminalControlContainer = document.createElement("span");
+  terminalControlContainer.setAttribute("data-terminal-control-container", "");
+  bottomBar.appendChild(terminalControlContainer);
 
   const speedControl = createSpeedControl({ onSlowDown, onSpeedUp });
-  bottomBar.appendChild(speedControl);
+  terminalControlContainer.appendChild(speedControl);
 
   const restart = createRestartButton({ onRestart });
 
   function switchToRestart() {
-    if (restart.parentElement === bottomBar) {
+    if (restart.parentElement === terminalControlContainer) {
       return;
     }
-    bottomBar.replaceChild(restart, speedControl);
+    terminalControlContainer.replaceChild(restart, speedControl);
   }
 
   function switchToSpeedControl() {
-    if (speedControl.parentElement === bottomBar) {
+    if (speedControl.parentElement === terminalControlContainer) {
       return;
     }
-    bottomBar.replaceChild(speedControl, restart);
+    terminalControlContainer.replaceChild(speedControl, restart);
   }
 
   return { element: bottomBar, switchToRestart, switchToSpeedControl };
