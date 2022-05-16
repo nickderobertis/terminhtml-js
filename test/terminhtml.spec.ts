@@ -1,5 +1,10 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
-import { findByText, fireEvent, queryByText } from "@testing-library/dom";
+import {
+  findByText,
+  fireEvent,
+  queryByText,
+  screen,
+} from "@testing-library/dom";
 import TerminHTML from "../src";
 import "../src/termynal.css";
 
@@ -97,5 +102,45 @@ describe("TerminHTML", () => {
     expect(queryByText(element, "echo woo")).toBeNull();
     expect(queryByText(element, "woo")).toBeNull();
     await expectTerminHTMLToInitialize(element);
+  });
+
+  it("increases the animation speed when speed up is clicked", async () => {
+    const { element, term } = createTextTerminHTMLBlock();
+
+    function getOutputText(): string {
+      const outputElem = element.querySelector(
+        '[data-terminal-line-output-area=""]'
+      )?.lastChild as HTMLElement;
+      return outputElem.textContent ?? "";
+    }
+
+    async function wait() {
+      for (let i = 0; i < 5; i++) {
+        await new Promise(resolve => {
+          setTimeout(resolve, 5);
+          vi.advanceTimersByTime(150);
+        });
+      }
+    }
+
+    term.init();
+    await wait();
+    // screen.debug(element);
+    const origSpeedText = getOutputText();
+    expect(queryByText(element, "1x")).toBeTruthy();
+
+    // Speed up, restart, then wait for the same amount of time
+    const speedUp = await findByText(element, "►");
+    fireEvent.click(speedUp);
+    fireEvent.click(speedUp);
+    fireEvent.click(speedUp);
+    fireEvent.click(speedUp);
+    expect(queryByText(element, "16x")).toBeTruthy();
+    await waitForAnimation();
+    const restart = await findByText(element, "restart ↻");
+    fireEvent.click(restart);
+    await wait();
+    const newSpeedText = getOutputText();
+    expect(newSpeedText.length).toBeGreaterThan(origSpeedText.length);
   });
 });
