@@ -13,6 +13,12 @@ function runDelayApp() {
   });
 }
 
+function runTextOnlyApp() {
+  new TerminHTML("#text-only", {
+    initNow: true,
+  });
+}
+
 function runPausedApp() {
   new TerminHTML("#paused", {
     initNow: true,
@@ -39,6 +45,7 @@ function runManualInitApp() {
 
 runTerminHTMLApp();
 runDelayApp();
+runTextOnlyApp();
 runPausedApp();
 runSpinnerApp();
 runManualInitApp();
