@@ -6,10 +6,11 @@ import { createPromptElement } from "./prompt";
 
 type TransformInputForDisplayOutputs = {
   typingArea: HTMLElement;
+  copyButton: HTMLElement;
   chars: string[];
 };
 
-export function transformInputLineForDisplay(
+export function prepareEmptyInputLine(
   line: HTMLElement,
   pfx: string
 ): TransformInputForDisplayOutputs {
@@ -24,8 +25,7 @@ export function transformInputLineForDisplay(
   const prompt = createPromptElement(promptText);
   const typingArea = document.createElement("span");
   createEventListenerToToggleCopyToClipboardVisibility(line, copyButton);
-  line.appendChild(copyButton);
   line.appendChild(prompt);
   line.appendChild(typingArea);
-  return { chars, typingArea };
+  return { chars, typingArea, copyButton };
 }

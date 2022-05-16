@@ -44,7 +44,7 @@ async function expectTerminHTMLToInitialize(element: HTMLElement) {
 
   // Check for input displayed
   const inputTextElem = await findByText(element, "echo woo");
-  const inputElem = inputTextElem.parentElement as HTMLElement;
+  const inputElem = inputTextElem.parentElement?.parentElement as HTMLElement;
   expect(inputElem.getAttribute("data-ty")).toEqual("input");
   // Check for output displayed
   const outputElem = await findByText(element, "woo");

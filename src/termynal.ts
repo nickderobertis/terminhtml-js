@@ -3,11 +3,15 @@ import {
   createEventListenerToToggleCopyToClipboardVisibility,
 } from "./copy-button";
 import { getElementFromSelectorOrElement } from "./dom-utils";
-import { transformInputLineForDisplay } from "./input-display";
+import { prepareEmptyInputLine } from "./prepare-input-line";
 import type { LineData } from "./lines";
 import { createElementFromLineData } from "./lines";
 import { createPromptElement } from "./prompt";
 import { createTopBar, linesToCopyText } from "./top-bar";
+import {
+  transformLineForDisplay,
+  TransformLineForDisplayOptions,
+} from "./line-display";
 
 /*
  * Custom options for Termynal
@@ -316,8 +320,14 @@ export class Termynal {
     this.bottomBar.appendChild(this.restartElement);
   }
 
-  private _addLine(line: HTMLElement): void {
+  private _addLine(
+    line: HTMLElement,
+    options?: TransformLineForDisplayOptions
+  ): HTMLElement {
+    const { outputArea } = transformLineForDisplay(line, options);
     this.linesContainer.appendChild(line);
+    const typingArea = outputArea.lastChild as HTMLElement;
+    return typingArea;
   }
 
   /**
@@ -325,8 +335,8 @@ export class Termynal {
    * @param line - The line element to render.
    */
   private async _type(line: HTMLElement): Promise<void> {
-    const { chars, typingArea } = transformInputLineForDisplay(line, this.pfx);
-    this._addLine(line);
+    const { chars, copyButton } = prepareEmptyInputLine(line, this.pfx);
+    const typingArea = this._addLine(line, { copyButton });
     this._scrollToBottom();
 
     for (const char of chars) {
