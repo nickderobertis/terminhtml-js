@@ -18,7 +18,7 @@
   /* font-family: 'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', Courier, monospace; */
   font-family: 'Roboto Mono', 'Fira Mono', Consolas, Menlo, Monaco, 'Courier New', Courier, monospace;
   border-radius: 4px;
-  padding: 60px 0px 35px;
+  padding: 0px 0px 35px;
   position: relative;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -121,6 +121,24 @@ a[data-terminal-control] {
   font-size: 19px;
 }
 
+div[data-terminal-top-bar] {
+  padding-top: 10px;
+  padding-right: 8px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+[data-terminal-copy-button][data-terminal-top-bar-copy-button] svg {
+  stroke: var(--color-text-subtle);
+  height: 2em;
+  bottom: 0
+}
+
+[data-terminal-copy-popup][data-terminal-top-bar-copy-popup] {
+  right: 1em;
+  top: 3em;
+}
+
 
 [data-terminal-bottom-bar] {
   position: absolute;
@@ -171,7 +189,7 @@ a[data-terminal-control] {
   background-color: #ffffff20;
 }
 
-[data-terminal-line-copy-button] {
+[data-terminal-copy-button] {
   cursor: pointer;
   position: relative;
   overflow: hidden;
@@ -185,7 +203,7 @@ a[data-terminal-control] {
   border-width: 0px;
 }
 
-[data-terminal-line-copy-button] svg {
+[data-terminal-copy-button] svg {
   stroke: var(--color-text-subtle);
   height: 1.2em;
   bottom: 0
@@ -193,8 +211,6 @@ a[data-terminal-control] {
 
 [data-terminal-copy-popup] {
   position: absolute;
-  top: 1em;
-  left: 1em;
   background-color: var(--color-copied-background);
   color: var(--color-copied-text);
   border-width: 2px;
@@ -204,7 +220,14 @@ a[data-terminal-control] {
   padding-left: 0.5em;
   padding-right: 0.5em;
   box-shadow: 1px 1px 1px rgb(71, 71, 71);
+  z-index: 1;
 }
+
+[data-terminal-copy-popup][data-terminal-line-copy-popup] {
+  top: 2em;
+  left: 1em;
+}
+
 
 /* Cursor animation */
 

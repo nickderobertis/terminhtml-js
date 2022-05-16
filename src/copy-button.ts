@@ -1,15 +1,33 @@
+type CopyToClipboardButtonOptions = {
+  visible: boolean;
+  buttonPfx: string;
+  popUpText: string;
+};
+
+const defaultCopyToClipboardButtonOptions: CopyToClipboardButtonOptions = {
+  visible: true,
+  buttonPfx: "line",
+  popUpText: "Copied!",
+};
+
 export function createCopyToClipboardButton(
   text: string,
-  visible = true
+  options: Partial<CopyToClipboardButtonOptions> = defaultCopyToClipboardButtonOptions
 ): HTMLElement {
+  const { visible, buttonPfx, popUpText } = {
+    ...defaultCopyToClipboardButtonOptions,
+    ...options,
+  };
   const button = document.createElement("button");
-  button.setAttribute(`data-terminal-line-copy-button`, "true");
+  button.setAttribute(`data-terminal-${buttonPfx}-copy-button`, "true");
+  button.setAttribute(`data-terminal-copy-button`, "true");
+  button.setAttribute("aria-label", "Copy to clipboard");
   if (!visible) {
     button.style.visibility = "hidden";
   }
   const icon = createCopyButtonIcon();
   button.appendChild(icon);
-  const popUp = createSuccessfulCopyPopUp();
+  const popUp = createSuccessfulCopyPopUp(buttonPfx, { text: popUpText });
   button.addEventListener("click", () => {
     navigator.clipboard
       .writeText(text)
@@ -29,10 +47,23 @@ export function createCopyToClipboardButton(
   return button;
 }
 
-function createSuccessfulCopyPopUp(): HTMLElement {
+type PopUpOptions = {
+  text: string;
+};
+
+const defaultPopUpOptions: PopUpOptions = {
+  text: "Copied!",
+};
+
+function createSuccessfulCopyPopUp(
+  buttonPfx: string,
+  options: Partial<PopUpOptions> = defaultPopUpOptions
+): HTMLElement {
+  const { text } = { ...defaultPopUpOptions, ...options };
   const popUp = document.createElement("div");
   popUp.setAttribute("data-terminal-copy-popup", "true");
-  popUp.appendChild(document.createTextNode("Copied!"));
+  popUp.setAttribute(`data-terminal-${buttonPfx}-copy-popup`, "true");
+  popUp.appendChild(document.createTextNode(text));
   return popUp;
 }
 

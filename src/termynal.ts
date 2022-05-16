@@ -6,6 +6,7 @@ import { getElementFromSelectorOrElement } from "./dom-utils";
 import type { LineData } from "./lines";
 import { createElementFromLineData } from "./lines";
 import { createPromptElement } from "./prompt";
+import { createTopBar, linesToCopyText } from "./top-bar";
 
 /*
  * Custom options for Termynal
@@ -59,6 +60,10 @@ export class Termynal {
    */
   linesContainer: HTMLElement;
   /**
+   * Element for the top bar of the terminal.
+   */
+  topBar: HTMLElement;
+  /**
    * Element for the bottom bar of the terminal.
    */
   bottomBar: HTMLElement;
@@ -95,6 +100,7 @@ export class Termynal {
   autoScroll: boolean;
   origAutoScroll: boolean;
   speedMultiplier = 1;
+  copyText: string;
 
   /**
    *
@@ -134,6 +140,13 @@ export class Termynal {
     this.bottomBar = this._generateBottomBar();
     this.restartElement = this._generateRestart();
     this.speedControlElement = this._generateSpeedControl();
+    this.copyText = linesToCopyText(this.lines, this.pfx);
+    const { topBar, copyButton } = createTopBar({ copyText: this.copyText });
+    this.topBar = topBar;
+    createEventListenerToToggleCopyToClipboardVisibility(
+      this.container,
+      copyButton
+    );
     this.brandingElement =
       options.brandingElement ?? document.createElement("span");
     this.container.innerHTML = "";
@@ -154,6 +167,7 @@ export class Termynal {
     this.container.innerHTML = "";
     this.linesContainer.innerHTML = "";
     this._buildBottomBarForRuntime();
+    this.container.appendChild(this.topBar);
     this.container.appendChild(this.linesContainer);
     this.container.appendChild(this.bottomBar);
     if (this.speedControlElement) {
@@ -313,7 +327,10 @@ export class Termynal {
     const text = line.textContent ?? "";
     const chars = [...text];
     line.textContent = "";
-    const copyButton = createCopyToClipboardButton(text, false);
+    const copyButton = createCopyToClipboardButton(text, {
+      visible: false,
+      buttonPfx: "line",
+    });
     const promptText = line.getAttribute(`${this.pfx}-prompt`);
     const prompt = createPromptElement(promptText);
     const typingArea = document.createElement("span");
