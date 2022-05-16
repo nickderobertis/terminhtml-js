@@ -82,7 +82,7 @@ a[data-terminal-control] {
 }
 
 span[data-terminal-line-output-area] {
-  display: inline;
+  overflow-wrap: anywhere;
 }
 
 [data-terminal-prompt-start] {
