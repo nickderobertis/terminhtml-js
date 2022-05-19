@@ -1,10 +1,5 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
-import {
-  findByText,
-  fireEvent,
-  queryByText,
-  screen,
-} from "@testing-library/dom";
+import { findByText, fireEvent, queryByText } from "@testing-library/dom";
 import TerminHTML from "../src";
 import "../src/termynal.css";
 

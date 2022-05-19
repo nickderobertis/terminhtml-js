@@ -6,7 +6,7 @@ type SpeedControlOptions = {
 export function createSpeedControl({
   onSlowDown,
   onSpeedUp,
-}: SpeedControlOptions) {
+}: SpeedControlOptions): HTMLElement {
   const speedControlContainer = document.createElement("span");
   speedControlContainer.setAttribute(
     "data-terminal-speed-control-container",
